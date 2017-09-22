@@ -1,6 +1,6 @@
 #include "variables.h"
 #include "allegro_stuff.h"
-
+#include "character.h"
 
 int pre_start_game() {
 
@@ -30,7 +30,7 @@ int pre_start_game() {
 	return -1;
 	}
 	/*/
-	display = al_create_display(640, 600);
+	display = al_create_display(800, 600);
 	if (!display) {
 		printf("Display didnt load correctly. Program will exit\nPress any key to continue");
 		return -1;
@@ -62,7 +62,10 @@ void initialize_bitmaps() {
 	exitbmp = al_load_bitmap("menu_images/exit.png");
 	menusquarebmp = al_load_bitmap("menu_images/choosen.png");
 	logobmp = al_load_bitmap("menu_images/logo.png");
-
+	brickbmp = al_load_bitmap("game_images/brick.jpg");
+	floorbmp = al_load_bitmap("game_images/floor.jpg");
+	player_left = al_load_bitmap("player_images/left.png");
+	player_right = al_load_bitmap("player_images/right.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
 
 }
@@ -111,7 +114,18 @@ void menu_loop() {
 		case ALLEGRO_KEY_ENTER:
 			if (!in_options && !in_game && !in_instructions) {
 				switch (main_menu_choosen) {
-				case 25: in_game = true; in_menu = false; break;
+				case 25: 
+					al_stop_timer(menu_timer);
+					al_destroy_event_queue(menu_event_queue);
+					game_event_queue = al_create_event_queue();
+					game_timer = al_create_timer(DeltaTime);
+					al_register_event_source(game_event_queue, al_get_keyboard_event_source());
+					al_register_event_source(game_event_queue, al_get_timer_event_source(menu_timer));
+					al_start_timer(menu_timer);
+					in_game = true;
+					in_menu = false; 
+					al_clear_to_color(al_map_rgb(0, 0, 0));
+					break;
 				case 75: in_instructions = true; break;
 				case 125: in_options = true; break;
 				case 175: in_menu = false; break;
@@ -123,6 +137,16 @@ void menu_loop() {
 	}
 	al_flip_display();
 }
+void game_loop() {
+	ALLEGRO_EVENT ev;
+	al_wait_for_event(game_event_queue, &ev);
+	al_draw_bitmap(brickbmp, START_WALL_X, 0, 0);
+	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
+	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
+	character player(START_PLAYER_X,START_PLAYER_Y);
+	al_draw_bitmap(player_left, player.get_x(), player.get_y(), 0);
+	al_flip_display();
+}
 int main(void) {
 	pre_start_game();
 	init_addons();
@@ -130,6 +154,9 @@ int main(void) {
 	initialize_bitmaps();
 	while (in_menu) {
 		menu_loop();
+	}
+	while (in_game) {
+		game_loop();
 	}
 	destroy_everything();
 	return 0;
