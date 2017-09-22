@@ -11,3 +11,5 @@ ALLEGRO_BITMAP *optionsbmp = NULL;
 ALLEGRO_BITMAP *exitbmp = NULL;
 ALLEGRO_BITMAP *menusquarebmp = NULL;
 ALLEGRO_BITMAP *logobmp = NULL;
+
+ALLEGRO_FONT *font = NULL; 
