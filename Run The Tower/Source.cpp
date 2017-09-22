@@ -1,48 +1,19 @@
-#include<iostream>
-#include<allegro5\allegro.h>
-#include<allegro5\allegro_native_dialog.h>
-#include<allegro5\allegro_font.h>
-#include<allegro5\allegro_ttf.h>
-#include<allegro5\allegro_image.h>
-#include<allegro5\allegro_primitives.h>
-#include <allegro5\allegro_audio.h>
-#include <allegro5\allegro_acodec.h>
-#include <allegro5\monitor.h>
-#include <ctime>
-#include <math.h>
-
-#define FPS 60
-
-ALLEGRO_DISPLAY *display = NULL;
-ALLEGRO_TIMER *menu_timer = NULL;
-ALLEGRO_EVENT_QUEUE *menu_event_queue = NULL;
-ALLEGRO_BITMAP *startbmp = NULL;
-ALLEGRO_BITMAP *instructionsbmp = NULL;
-ALLEGRO_BITMAP *optionsbmp = NULL;
-ALLEGRO_BITMAP *exitbmp = NULL;
-ALLEGRO_BITMAP *menusquarebmp = NULL;
-ALLEGRO_BITMAP *logobmp = NULL;
-
-float DeltaTime = 1.0 / FPS;
-bool left_menu;
-bool keys[4] = { false };
-int main_menu_choosen = 25;
-
-enum KEYS { UP, DOWN, LEFT, RIGHT };
+#include "variables.h"
+#include "allegro_stuff.h"
 
 int pre_start_game() {
-	
+
 	if (!al_init()) {
 		int error;
 		printf("Allegro didnt load correctly. Program will exit\nPress any key to continue");
 		scanf_s("%i", &error);
 		return -1;
 	}
-/*/	if (!al_install_audio()) {
-		int error;
-		printf("install_audio didnt  load correctly. Program will exit\nPress any key to continue");
-		scanf_s("%i", &error);
-		return -1;
+	/*/	if (!al_install_audio()) {
+	int error;
+	printf("install_audio didnt  load correctly. Program will exit\nPress any key to continue");
+	scanf_s("%i", &error);
+	return -1;
 	}/*/
 	if (!al_init_acodec_addon()) {
 		int error;
@@ -51,10 +22,10 @@ int pre_start_game() {
 		return -1;
 	}
 	/*/	if (!al_reserve_samples(1)) {
-		int error;
-		printf("Reserve samples didnt load correctly. Program will exit\nPress any key to continue");
-		scanf_s("%i", &error);
-		return -1;
+	int error;
+	printf("Reserve samples didnt load correctly. Program will exit\nPress any key to continue");
+	scanf_s("%i", &error);
+	return -1;
 	}
 	/*/
 	display = al_create_display(640, 600);
@@ -81,11 +52,6 @@ void register_events_queue_timer() {
 	al_register_event_source(menu_event_queue, al_get_timer_event_source(menu_timer));
 	al_start_timer(menu_timer);
 }
-void destroy_everything() {
-	al_destroy_display(display);
-	al_destroy_timer(menu_timer);
-	al_destroy_event_queue(menu_event_queue);
-}
 void initialize_bitmaps() {
 	startbmp = al_load_bitmap("menu_images/start.png");
 	instructionsbmp = al_load_bitmap("menu_images/instructions.png");
@@ -94,6 +60,12 @@ void initialize_bitmaps() {
 	menusquarebmp = al_load_bitmap("menu_images/choosen.png");
 	logobmp = al_load_bitmap("menu_images/logo.png");
 }
+void destroy_everything() {
+	al_destroy_display(display);
+	al_destroy_timer(menu_timer);
+	al_destroy_event_queue(menu_event_queue);
+}
+
 int main(void) {
 	pre_start_game();
 	init_addons();
