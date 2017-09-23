@@ -2,6 +2,8 @@
 #include "allegro_stuff.h"
 #include "character.h"
 
+character player(START_PLAYER_X, START_PLAYER_Y);
+
 int pre_start_game() {
 
 	if (!al_init()) {
@@ -72,8 +74,8 @@ void initialize_bitmaps() {
 void destroy_everything() {
 	al_destroy_display(display);
 	al_destroy_timer(menu_timer);
-	al_destroy_event_queue(menu_event_queue);
 }
+
 void menu_loop() {
 	if (in_menu && !in_game && !in_instructions && !in_options) {
 		al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -120,8 +122,8 @@ void menu_loop() {
 					game_event_queue = al_create_event_queue();
 					game_timer = al_create_timer(DeltaTime);
 					al_register_event_source(game_event_queue, al_get_keyboard_event_source());
-					al_register_event_source(game_event_queue, al_get_timer_event_source(menu_timer));
-					al_start_timer(menu_timer);
+					al_register_event_source(game_event_queue, al_get_timer_event_source(game_timer));
+					al_start_timer(game_timer);
 					in_game = true;
 					in_menu = false; 
 					al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -138,13 +140,42 @@ void menu_loop() {
 	al_flip_display();
 }
 void game_loop() {
-	ALLEGRO_EVENT ev;
-	al_wait_for_event(game_event_queue, &ev);
+	int temp1, temp2; // used for set x,y
+	ALLEGRO_EVENT ev1;
+	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_bitmap(brickbmp, START_WALL_X, 0, 0);
 	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
 	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
-	character player(START_PLAYER_X,START_PLAYER_Y);
 	al_draw_bitmap(player_left, player.get_x(), player.get_y(), 0);
+	al_wait_for_event(game_event_queue, &ev1);
+	if (ev1.type == ALLEGRO_EVENT_KEY_DOWN) {
+		switch (ev1.keyboard.keycode) {
+		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true;   break;
+		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  break;
+		case ALLEGRO_KEY_SPACE: keys[RIGHT] = true;   break;
+
+		}
+	}
+	else if (ev1.type == ALLEGRO_EVENT_KEY_UP)
+	{
+		switch (ev1.keyboard.keycode) {
+		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false;  break;
+		case ALLEGRO_KEY_LEFT: keys[LEFT] = false;  break;
+		}
+	}
+	else if (ev1.type == ALLEGRO_EVENT_TIMER)
+	{
+
+		if (keys[RIGHT]) {
+			temp2 = player.get_x() + keys[RIGHT]*10;
+			player.set_x(temp2);
+		}
+		else if (keys[LEFT]) {
+			temp2 = player.get_x() - 10;
+			player.set_x(temp2);
+		}
+		al_draw_bitmap(player_left, player.get_x(), player.get_y(), 0);
+	}
 	al_flip_display();
 }
 int main(void) {

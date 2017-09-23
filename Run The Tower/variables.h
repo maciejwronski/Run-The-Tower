@@ -2,7 +2,7 @@
 
 #include "includes.h"
 
-#define FPS 60
+#define FPS 45
 #define START_WALL_X 0
 #define END_WALL_X 718
 #define WALL_WIDTH 82
@@ -18,7 +18,6 @@ bool in_menu = true;
 bool in_game = false;
 bool in_instructions = false;
 bool in_options = false;
-
 bool keys[4] = { false };
 
 int main_menu_choosen = 25;
