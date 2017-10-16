@@ -1,6 +1,7 @@
 #include "variables.h"
 #include "allegro_stuff.h"
 #include "character.h"
+#include "some_functions.h"
 
 character player(START_PLAYER_X, START_PLAYER_Y);
 
@@ -70,6 +71,9 @@ void initialize_bitmaps() {
 	player_right = al_load_bitmap("player_images/right.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
 
+	brick_width = al_get_bitmap_width(brickbmp);
+	player.set_width(al_get_bitmap_width(player_left));
+	player.set_height(al_get_bitmap_height(player_left));
 }
 void destroy_everything() {
 	al_destroy_display(display);
@@ -165,14 +169,17 @@ void game_loop() {
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
-
 		if (keys[RIGHT]) {
+			if (!collision(player.get_x(), player.get_width(), END_WALL_X, brick_width)) {
 				temp2 = player.get_x() + keys[RIGHT] * 10;
 				player.set_x(temp2);
+			}
 		}
 		else if (keys[LEFT]) {
-			temp2 = player.get_x() - 10;
-			player.set_x(temp2);
+			if (!collision(player.get_x(), player.get_width(), START_WALL_X, brick_width)) {
+				temp2 = player.get_x() - 10;
+				player.set_x(temp2);
+			}
 		}
 		al_draw_bitmap(player_left, player.get_x(), player.get_y(), 0);
 	}

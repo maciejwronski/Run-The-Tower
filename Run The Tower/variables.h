@@ -21,4 +21,6 @@ bool in_options = false;
 bool keys[4] = { false };
 
 int main_menu_choosen = 25;
+int brick_width;
 enum KEYS { UP, DOWN, LEFT, RIGHT };
+
