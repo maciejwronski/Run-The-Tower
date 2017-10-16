@@ -167,8 +167,8 @@ void game_loop() {
 	{
 
 		if (keys[RIGHT]) {
-			temp2 = player.get_x() + keys[RIGHT]*10;
-			player.set_x(temp2);
+				temp2 = player.get_x() + keys[RIGHT] * 10;
+				player.set_x(temp2);
 		}
 		else if (keys[LEFT]) {
 			temp2 = player.get_x() - 10;
