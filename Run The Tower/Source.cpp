@@ -156,7 +156,7 @@ void game_loop() {
 		switch (ev1.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true;   break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  break;
-		case ALLEGRO_KEY_SPACE: keys[RIGHT] = true;   break;
+		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;   break;
 
 		}
 	}
@@ -165,6 +165,7 @@ void game_loop() {
 		switch (ev1.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false;  break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = false;  break;
+		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; break;
 		}
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
@@ -176,6 +177,12 @@ void game_loop() {
 			}
 		}
 		else if (keys[LEFT]) {
+			if (!collision(player.get_x(), player.get_width(), START_WALL_X, brick_width)) {
+				temp2 = player.get_x() - 10;
+				player.set_x(temp2);
+			}
+		}
+		else if (keys[SPACE]) {
 			if (!collision(player.get_x(), player.get_width(), START_WALL_X, brick_width)) {
 				temp2 = player.get_x() - 10;
 				player.set_x(temp2);
