@@ -13,17 +13,12 @@
 
 
 float DeltaTime = 1.0 / FPS;
-
 bool in_menu = true;
 bool in_game = false;
 bool in_instructions = false;
 bool in_options = false;
 bool keys[5] = { false };
-float dx, dy;
-bool mayJumpAgain = false;
 
-// is true if the player is on the ground
-bool isOnSolidGround;
 int main_menu_choosen = 25;
 int brick_width;
 enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };

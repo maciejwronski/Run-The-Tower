@@ -1,30 +1,31 @@
 #pragma once
 
 class character {
-	int x, y;
-	int dx, dy;
-	bool mayJump;
-	bool onGround;
+	float x, y;
+	float vel[2] = { 0.0, 0.0 };
 	int width;
 	int height;
+	bool onGround = false;
+	bool bound = false;
 public:
-	character(int position_x, int position_y) : x(position_x), y(position_y) {
+	character(float position_x, float position_y) : x(position_x), y(position_y) {
+		vel[0] = 0.0;
+		vel[1] = 0.0;
 	}
-	int get_x();
-	int get_y();
-	int get_width();
-	int get_height();
-	int get_dx();
-	int get_dy();
-	int can_jump();
-	int is_on_ground();
-	void set_x(int position_x);
-	void set_y(int position_y);
-	void set_dx(int dxx);
-	void set_dy(int dyy);
-	void set_width(int pwidth);
-	void set_height(int pheight);
-	void set_jump(bool can_jump);
-	void set_ground(bool on_ground);
-
+	bool isBound();
+	float getPositionX();
+	float getPositionY();
+	int getWidth();
+	int getHeight();
+	float getVelocityX();
+	float getVelocityY();
+	void setPositionX(float position_x);
+	void setPositionY(float position_y);
+	void setVelocityX(float velX);
+	void setVelocityY(float velY);
+	void setWidth(int pwidth);
+	void setHeight(int pheight);
+	void startJump();
+	void endJump();
+	void updateJump();
 };

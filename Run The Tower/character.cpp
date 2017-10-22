@@ -2,53 +2,74 @@
 
 #include "character.h"
 
-int character::get_x() {
+float character::getPositionX() {
 	return x;
 }
-int character::get_y() {
+float character::getPositionY() {
 	return y;
 }
-int character::get_width() {
+float character::getVelocityX() {
+	return vel[0];
+}
+float character::getVelocityY() {
+	return vel[1];
+}
+int character::getWidth() {
 	return width;
 }
-int character::get_height() {
+int character::getHeight() {
 	return height;
 }
-int character::get_dx() {
-	return dx;
+bool character::isBound() {
+	return bound;
 }
-int character::get_dy() {
-	return dy;
-}
-int character::can_jump() {
-	return mayJump;
-}
-int character::is_on_ground() {
-	return onGround;
-}
-void character::set_width(int pwidth) {
+void character::setWidth(int pwidth) {
 	width = pwidth;
 }
-void character::set_height(int pheight) {
+void character::setHeight(int pheight) {
 	height = pheight;
 }
 
-void character::set_x(int position_x) {
+void character::setPositionX(float position_x) {
 	x = position_x;
 }
-void character::set_y(int position_y) {
+void character::setPositionY(float position_y) {
 	y = position_y;
 }
 
-void character::set_dx(int dxx) {
-	dx = dxx;
+void character::setVelocityX(float velX) {
+	vel[0] = velX;
 }
-void character::set_dy(int dyy) {
-	dy = dyy;
+void character::setVelocityY(float velY) {
+	vel[1] = velY;
 }
-void character::set_jump(bool can_jump) {
-	mayJump = can_jump;
+
+void character::startJump() {
+	if (onGround)
+	{
+		vel[1] = -12.0;
+		onGround = false;
+	}
 }
-void character::set_ground(bool on_ground) {
-	onGround = on_ground;
+void character::endJump()
+{
+	if (vel[1] < -6.0)
+		vel[1] = -6.0;
+}
+void character::updateJump() {
+	vel[1] += 0.5;
+	y += vel[1];
+	x += vel[0];
+	if (y > 460.0)
+	{
+		y = 460.0;
+		vel[1] = 0.0;
+		onGround = true;
+	}
+
+	if (x <= 82 || x >= 694) { /////////// 
+		vel[0] *= -1;
+		bound = true; 
+	}
+
 }

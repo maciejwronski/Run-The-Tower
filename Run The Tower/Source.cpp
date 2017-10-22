@@ -72,8 +72,8 @@ void initialize_bitmaps() {
 	font = al_load_font("fonts/times.ttf", 24, 0);
 
 	brick_width = al_get_bitmap_width(brickbmp);
-	player.set_width(al_get_bitmap_width(player_left));
-	player.set_height(al_get_bitmap_height(player_left));
+	player.setWidth(al_get_bitmap_width(player_left));
+	player.setHeight(al_get_bitmap_height(player_left));
 }
 void destroy_everything() {
 	al_destroy_display(display);
@@ -150,13 +150,13 @@ void game_loop() {
 	al_draw_bitmap(brickbmp, START_WALL_X, 0, 0);
 	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
 	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
-	al_draw_bitmap(player_left, player.get_x(), player.get_y(), 0);
+	al_draw_bitmap(player_left, player.getPositionX(), player.getPositionY(), 0);
 	al_wait_for_event(game_event_queue, &ev1);
 	if (ev1.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (ev1.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true;   break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  break;
-		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;   break;
+		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;  player.startJump(); break;
 
 		}
 	}
@@ -165,33 +165,32 @@ void game_loop() {
 		switch (ev1.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false;  break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = false;  break;
-		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; break;
+		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; player.endJump();break;
 		}
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
-		if (keys[RIGHT]) {
-			if (!collision(player.get_x(), player.get_width(), END_WALL_X, brick_width)) {
-				temp2 = player.get_x() + keys[RIGHT] * 10;
-				player.set_x(temp2);
+		player.updateJump();
+		if (keys[RIGHT] && !player.isBound()) {
+			if (!collision(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width)) {
+				temp2 = player.getPositionX() + keys[RIGHT] * 10;
+				player.setPositionX(temp2);
 			}
 		}
-		else if (keys[LEFT]) {
-			if (!collision(player.get_x(), player.get_width(), START_WALL_X, brick_width)) {
-				temp2 = player.get_x() - 10;
-				player.set_x(temp2);
+		else if (keys[LEFT] && !player.isBound()) {
+			if (!collision(player.getPositionX(), player.getWidth(), START_WALL_X, brick_width)) {
+				temp2 = player.getPositionX() - 10;
+				player.setPositionX(temp2);
 			}
 		}
 		else if (keys[SPACE]) {
-			if (!collision(player.get_x(), player.get_width(), START_WALL_X, brick_width)) {
-				temp2 = player.get_x() - 10;
-				player.set_x(temp2);
-			}
+
 		}
-		al_draw_bitmap(player_left, player.get_x(), player.get_y(), 0);
+		al_draw_bitmap(player_left, player.getPositionX(), player.getPositionY(), 0);
 	}
 	al_flip_display();
 }
+
 int main(void) {
 	pre_start_game();
 	init_addons();
