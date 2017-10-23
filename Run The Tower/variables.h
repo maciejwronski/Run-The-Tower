@@ -12,6 +12,7 @@
 #define START_PLAYER_Y 460 // start of player, y axis
 
 
+const int RGB_clock[3] = { 0,0,0 }; // clock line constants
 float DeltaTime = 1.0 / FPS;
 float run_boost = 0.8; // used for run-boost
 bool in_menu = true;
@@ -27,5 +28,7 @@ int brick_width;
 clock_t start; //
 double duration; // used to check, how long player is pressing a single button, to boost his run
 
+clock_t my_clock;
+double my_time;
 enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
 

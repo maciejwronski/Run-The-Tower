@@ -69,6 +69,7 @@ void initialize_bitmaps() {
 	floorbmp = al_load_bitmap("game_images/floor.jpg");
 	player_left = al_load_bitmap("player_images/left.png");
 	player_right = al_load_bitmap("player_images/right.png");
+	clockbmp = al_load_bitmap("game_images/clock.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
 
 	brick_width = al_get_bitmap_width(brickbmp);
@@ -151,12 +152,14 @@ void game_loop() {
 	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
 	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
 	al_draw_bitmap(player_left, player.getPositionX(), player.getPositionY(), 0);
+	al_draw_bitmap(clockbmp, 0, 20, 0);
 	al_wait_for_event(game_event_queue, &ev1);
 	if (ev1.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (ev1.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true; last_button = true; start = std::clock();  break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  last_button = false;  start = std::clock();  break;
 		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;  player.startJump(); break;
+		case ALLEGRO_KEY_UP: keys[UP] = true; player.startJump(); break;
 
 		}
 	}
@@ -166,6 +169,7 @@ void game_loop() {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false; duration = 0; break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = false; duration = 0; break;
 		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; player.endJump();break;
+		case ALLEGRO_KEY_UP: keys[UP] = false; player.endJump(); break;
 		}
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
@@ -192,7 +196,7 @@ void game_loop() {
 				player.setPositionX(temp2);
 			}
 		}
-		else if (keys[SPACE]) {
+		else if (keys[SPACE] || keys[UP]) {
 
 		}
 		al_draw_bitmap(player_left, player.getPositionX(), player.getPositionY(), 0);

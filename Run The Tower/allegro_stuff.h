@@ -17,4 +17,5 @@ ALLEGRO_BITMAP *brickbmp = NULL;
 ALLEGRO_BITMAP *floorbmp = NULL;
 ALLEGRO_BITMAP *player_left = NULL;
 ALLEGRO_BITMAP *player_right = NULL;
+ALLEGRO_BITMAP *clockbmp = NULL;
 ALLEGRO_FONT *font = NULL; 
