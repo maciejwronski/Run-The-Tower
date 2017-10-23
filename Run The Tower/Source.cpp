@@ -170,22 +170,25 @@ void game_loop() {
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
-		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-		player.updateJump();
-		/*/if (player.inAir()) {
-			// switch last button ( left or right ) velocity not constant
-			temp2 = player.getPositionX() + 4;
-			player.setPositionX(temp2);
-		}/*/
-		if (keys[RIGHT] && !player.isBound()) {
+		if (keys[RIGHT] || keys[LEFT]) {
+			duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		}
+		if (player.inAir()) {
+			player.updateJump();
+		}
+		if (keys[RIGHT]) {
 			if (!collision(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width)) {
-				temp2 = player.getPositionX() + 10 * duration*run_boost;
+				temp1 = 10 * duration*run_boost;
+				temp2 = player.getPositionX() + temp1;
+				player.setVelocityX(temp1*0.5);
 				player.setPositionX(temp2);
 			}
 		}
-		else if (keys[LEFT] && !player.isBound()) {
+		else if (keys[LEFT]) {
 			if (!collision(player.getPositionX(), player.getWidth(), START_WALL_X, brick_width)) {
-				temp2 = player.getPositionX() - 10*duration*run_boost;
+				temp1 = -10 * duration*run_boost;
+				temp2 = player.getPositionX() + temp1;
+				player.setVelocityX(temp1*0.5);
 				player.setPositionX(temp2);
 			}
 		}

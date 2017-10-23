@@ -65,6 +65,7 @@ void character::updateJump() {
 		y = 460.0;
 		vel[1] = 0.0;
 		onGround = true;
+		vel[0] = 0.0;
 	}
 
 	if (x <= 82 || x >= 694) { /////////// 
