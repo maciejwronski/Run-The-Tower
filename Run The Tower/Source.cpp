@@ -115,8 +115,8 @@ void menu_loop() {
 		switch (ev.keyboard.keycode) {
 		case ALLEGRO_KEY_UP: keys[UP] = false;  break;
 		case ALLEGRO_KEY_DOWN: keys[DOWN] = false;  break;
-		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false;  break;
-		case ALLEGRO_KEY_LEFT: keys[LEFT] = false;  break;
+		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false; break;
+		case ALLEGRO_KEY_LEFT: keys[LEFT] = false; break;
 		case ALLEGRO_KEY_ENTER:
 			if (!in_options && !in_game && !in_instructions) {
 				switch (main_menu_choosen) {
@@ -154,8 +154,8 @@ void game_loop() {
 	al_wait_for_event(game_event_queue, &ev1);
 	if (ev1.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (ev1.keyboard.keycode) {
-		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true;   break;
-		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  break;
+		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true; last_button = true; start = std::clock();  break;
+		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  last_button = false;  start = std::clock();  break;
 		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;  player.startJump(); break;
 
 		}
@@ -163,23 +163,29 @@ void game_loop() {
 	else if (ev1.type == ALLEGRO_EVENT_KEY_UP)
 	{
 		switch (ev1.keyboard.keycode) {
-		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false;  break;
-		case ALLEGRO_KEY_LEFT: keys[LEFT] = false;  break;
+		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false; duration = 0; break;
+		case ALLEGRO_KEY_LEFT: keys[LEFT] = false; duration = 0; break;
 		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; player.endJump();break;
 		}
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
+		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 		player.updateJump();
+		/*/if (player.inAir()) {
+			// switch last button ( left or right ) velocity not constant
+			temp2 = player.getPositionX() + 4;
+			player.setPositionX(temp2);
+		}/*/
 		if (keys[RIGHT] && !player.isBound()) {
 			if (!collision(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width)) {
-				temp2 = player.getPositionX() + keys[RIGHT] * 10;
+				temp2 = player.getPositionX() + 10 * duration*run_boost;
 				player.setPositionX(temp2);
 			}
 		}
 		else if (keys[LEFT] && !player.isBound()) {
 			if (!collision(player.getPositionX(), player.getWidth(), START_WALL_X, brick_width)) {
-				temp2 = player.getPositionX() - 10;
+				temp2 = player.getPositionX() - 10*duration*run_boost;
 				player.setPositionX(temp2);
 			}
 		}

@@ -71,5 +71,8 @@ void character::updateJump() {
 		vel[0] *= -1;
 		bound = true; 
 	}
+}
 
+bool character::inAir() {
+	return !onGround;
 }

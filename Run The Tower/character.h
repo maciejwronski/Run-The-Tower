@@ -5,7 +5,7 @@ class character {
 	float vel[2] = { 0.0, 0.0 };
 	int width;
 	int height;
-	bool onGround = false;
+	bool onGround = true;
 	bool bound = false;
 public:
 	character(float position_x, float position_y) : x(position_x), y(position_y) {
@@ -13,6 +13,7 @@ public:
 		vel[1] = 0.0;
 	}
 	bool isBound();
+	bool inAir();
 	float getPositionX();
 	float getPositionY();
 	int getWidth();
