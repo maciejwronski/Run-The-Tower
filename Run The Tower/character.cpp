@@ -2,6 +2,15 @@
 
 #include "character.h"
 
+character::character() {}
+character::~character() {}
+
+void character::Init() {
+	x = 400;
+	y = 460;
+	vel[0] = 0;
+	vel[1] = 0;
+}
 float character::getPositionX() {
 	return x;
 }
@@ -13,6 +22,9 @@ float character::getVelocityX() {
 }
 float character::getVelocityY() {
 	return vel[1];
+}
+void character::setDirection(int num) {
+	direction = num;
 }
 int character::getWidth() {
 	return width;
@@ -68,12 +80,22 @@ void character::updateJump() {
 		vel[0] = 0.0;
 	}
 
-	if (x <= 82 || x >= 694) { /////////// 
+	if (x <= 82|| x >= 694) { /////////// 
 		vel[0] *= -1;
 		bound = true; 
+		if (direction == 1)
+			direction = 2;
+		else if (direction == 2)
+			direction = 1;
 	}
 }
 
 bool character::inAir() {
 	return !onGround;
+}
+int character::getDirection() {
+	return direction;
+}
+void character::Draw(ALLEGRO_BITMAP *bitmap) {
+	al_draw_bitmap(bitmap, x, y, 0);
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "includes.h"
+
 class character {
 	float x, y;
 	float vel[2] = { 0.0, 0.0 };
@@ -7,16 +9,18 @@ class character {
 	int height;
 	bool onGround = true;
 	bool bound = false;
+	int direction = 1; // 1 - left, 2 right
 public:
-	character(float position_x, float position_y) : x(position_x), y(position_y) {
-		vel[0] = 0.0;
-		vel[1] = 0.0;
-	}
+	character();
+	~character();
+	void Init();
 	bool isBound();
 	bool inAir();
 	float getPositionX();
 	float getPositionY();
 	int getWidth();
+	void setDirection(int num);
+	int getDirection();
 	int getHeight();
 	float getVelocityX();
 	float getVelocityY();
@@ -29,4 +33,5 @@ public:
 	void startJump();
 	void endJump();
 	void updateJump();
+	void Draw(ALLEGRO_BITMAP *bitmap);
 };

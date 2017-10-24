@@ -1,10 +1,7 @@
-#include "variables.h"
 #include "allegro_stuff.h"
 #include "character.h"
 #include "some_functions.h"
-
-character player(START_PLAYER_X, START_PLAYER_Y);
-
+#include "variables.h"
 int pre_start_game() {
 
 	if (!al_init()) {
@@ -132,6 +129,9 @@ void menu_loop() {
 					in_game = true;
 					in_menu = false; 
 					al_clear_to_color(al_map_rgb(0, 0, 0));
+					keys[LEFT] = keys[RIGHT] = false;
+					player.Init();
+					my_clock = std::clock();
 					break;
 				case 75: in_instructions = true; break;
 				case 125: in_options = true; break;
@@ -151,13 +151,30 @@ void game_loop() {
 	al_draw_bitmap(brickbmp, START_WALL_X, 0, 0);
 	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
 	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
-	al_draw_bitmap(player_left, player.getPositionX(), player.getPositionY(), 0);
 	al_draw_bitmap(clockbmp, 0, 20, 0);
+
+	my_time = (int)(std::clock() - my_clock) / (double)CLOCKS_PER_SEC;
+	if (first_tick) {
+		old_time = my_time;
+		first_tick = false;
+	}
+	if (my_time != old_time) {
+		old_time = my_time;
+		degree += 12;
+		if (degree == 360) {
+			degree = 0;
+		}
+	}
+	
+	current_degree = degree * M_PI / 180;
+	x_c = (double)(50 * sin(current_degree));
+	y_c = (double)(50 * cos(current_degree));
+	al_draw_line(50, 75, 50 + x_c, 75 - y_c, al_map_rgb(RGB_clock[0], RGB_clock[1], RGB_clock[2]), 5);
 	al_wait_for_event(game_event_queue, &ev1);
 	if (ev1.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (ev1.keyboard.keycode) {
-		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true; last_button = true; start = std::clock();  break;
-		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  last_button = false;  start = std::clock();  break;
+		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true; start = std::clock(); player.setDirection(2);  break;
+		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  start = std::clock(); player.setDirection(1); break;
 		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;  player.startJump(); break;
 		case ALLEGRO_KEY_UP: keys[UP] = true; player.startJump(); break;
 
@@ -174,6 +191,7 @@ void game_loop() {
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
+		al_draw_textf(font, al_map_rgb(255, 255, 255), 100, 100, 0, "he %d %d %d", my_time, old_time, degree);
 		if (keys[RIGHT] || keys[LEFT]) {
 			duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 		}
@@ -199,8 +217,11 @@ void game_loop() {
 		else if (keys[SPACE] || keys[UP]) {
 
 		}
-		al_draw_bitmap(player_left, player.getPositionX(), player.getPositionY(), 0);
 	}
+	if (player.getDirection() == 1)
+		player.Draw(player_left);
+	else if (player.getDirection() == 2)
+		player.Draw(player_right);
 	al_flip_display();
 }
 
@@ -212,6 +233,7 @@ int main(void) {
 	while (in_menu) {
 		menu_loop();
 	}
+
 	while (in_game) {
 		game_loop();
 	}

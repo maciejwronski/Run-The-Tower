@@ -121,7 +121,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="block.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="some_functions.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -131,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allegro_stuff.h" />
-    <ClInclude Include="block.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="some_functions.h" />
