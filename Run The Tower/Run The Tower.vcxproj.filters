@@ -24,15 +24,15 @@
     <ClCompile Include="some_functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allegro_stuff.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="character.h">
@@ -42,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="variables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

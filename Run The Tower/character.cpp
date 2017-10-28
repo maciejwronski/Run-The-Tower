@@ -1,15 +1,17 @@
-#pragma once
-
 #include "character.h"
 
 character::character() {}
 character::~character() {}
 
 void character::Init() {
+	player_left = al_load_bitmap("player_images/left.png");
+	player_right = al_load_bitmap("player_images/right.png");
 	x = 400;
 	y = 460;
 	vel[0] = 0;
 	vel[1] = 0;
+	setWidth(al_get_bitmap_width(player_left));
+	setHeight(al_get_bitmap_height(player_left));
 }
 float character::getPositionX() {
 	return x;
@@ -96,6 +98,13 @@ bool character::inAir() {
 int character::getDirection() {
 	return direction;
 }
-void character::Draw(ALLEGRO_BITMAP *bitmap) {
-	al_draw_bitmap(bitmap, x, y, 0);
+void character::Draw(int direction) {
+	switch (direction) {
+	case 1:
+		al_draw_bitmap(player_left, x, y, 0);
+		break;
+	case 2:
+		al_draw_bitmap(player_right, x, y, 0);
+		break;
+	}
 }

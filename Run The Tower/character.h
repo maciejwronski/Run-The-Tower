@@ -1,6 +1,6 @@
 #pragma once
 
-#include "includes.h"
+#include <allegro5\allegro_primitives.h>
 
 class character {
 	float x, y;
@@ -10,6 +10,10 @@ class character {
 	bool onGround = true;
 	bool bound = false;
 	int direction = 1; // 1 - left, 2 right
+
+	ALLEGRO_BITMAP *player_left = NULL;
+	ALLEGRO_BITMAP *player_right = NULL;
+
 public:
 	character();
 	~character();
@@ -33,5 +37,5 @@ public:
 	void startJump();
 	void endJump();
 	void updateJump();
-	void Draw(ALLEGRO_BITMAP *bitmap);
+	void Draw(int direction);
 };

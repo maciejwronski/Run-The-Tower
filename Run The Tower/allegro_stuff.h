@@ -1,6 +1,5 @@
 #pragma once
-
-#include "includes.h"
+#include "allegro5\allegro_font.h"
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_TIMER *menu_timer = NULL;
@@ -15,7 +14,4 @@ ALLEGRO_BITMAP *menusquarebmp = NULL;
 ALLEGRO_BITMAP *logobmp = NULL;
 ALLEGRO_BITMAP *brickbmp = NULL;
 ALLEGRO_BITMAP *floorbmp = NULL;
-ALLEGRO_BITMAP *player_left = NULL;
-ALLEGRO_BITMAP *player_right = NULL;
-ALLEGRO_BITMAP *clockbmp = NULL;
 ALLEGRO_FONT *font = NULL; 
