@@ -13,7 +13,6 @@
 #define START_PLAYER_Y 460 // start of player, y axis
 
 float DeltaTime = 1.0 / FPS;
-float run_boost = 0.8; // used for run-boost
 bool in_menu = true;
 bool in_game = false;
 bool in_instructions = false;
@@ -23,10 +22,9 @@ bool keys[5] = { false };
 int main_menu_choosen = 25;
 int brick_width;
 
-clock_t start; //
-double duration; // used to check, how long player is pressing a single button, to boost his run
-
+double temp;
 enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
+
 
 character player;
 myClock newclock;

@@ -158,14 +158,7 @@ void menu_loop() {
 	al_flip_display();
 }
 void game_loop() {
-	int temp1, temp2; // used for set x,y
 	ALLEGRO_EVENT ev1;
-	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_draw_bitmap(brickbmp, START_WALL_X, 0, 0);
-	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
-	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
-	newclock.Draw();
-	newclock.Tick();
 	al_wait_for_event(game_event_queue, &ev1);
 	if (ev1.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (ev1.keyboard.keycode) {
@@ -179,8 +172,8 @@ void game_loop() {
 	else if (ev1.type == ALLEGRO_EVENT_KEY_UP)
 	{
 		switch (ev1.keyboard.keycode) {
-		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false; duration = 0; break;
-		case ALLEGRO_KEY_LEFT: keys[LEFT] = false; duration = 0; break;
+		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false; player.setDuration(0); break;
+		case ALLEGRO_KEY_LEFT: keys[LEFT] = false; player.setDuration(0); break;
 		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; player.endJump();break;
 		case ALLEGRO_KEY_UP: keys[UP] = false; player.endJump(); break;
 		}
@@ -188,31 +181,32 @@ void game_loop() {
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
 		if (keys[RIGHT] || keys[LEFT]) {
-			duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+			temp = ((std::clock() - start) / (double)CLOCKS_PER_SEC);
+			player.setDuration(temp);
 		}
 		if (player.inAir()) {
 			player.updateJump();
 		}
 		if (keys[RIGHT]) {
 			if (!collision(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width)) {
-				temp1 = 10 * duration*run_boost;
-				temp2 = player.getPositionX() + temp1;
-				player.setVelocityX(temp1*0.5);
-				player.setPositionX(temp2);
+				player.moveRight();
 			}
 		}
 		else if (keys[LEFT]) {
 			if (!collision(player.getPositionX(), player.getWidth(), START_WALL_X, brick_width)) {
-				temp1 = -10 * duration*run_boost;
-				temp2 = player.getPositionX() + temp1;
-				player.setVelocityX(temp1*0.5);
-				player.setPositionX(temp2);
+				player.moveLeft();
 			}
 		}
 		else if (keys[SPACE] || keys[UP]) {
 
 		}
 	}
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_bitmap(brickbmp, START_WALL_X, 0, 0);
+	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
+	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
+	newclock.Draw();
+	newclock.Tick();
 	player.Draw(player.getDirection());
 	al_flip_display();
 }

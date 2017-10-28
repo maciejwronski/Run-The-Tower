@@ -108,3 +108,25 @@ void character::Draw(int direction) {
 		break;
 	}
 }
+void character::moveRight() {
+	temp1 = 10 * duration*run_boost;
+	temp2 = x + temp1;
+	vel[0] = temp1*0.5;
+	x = temp2;
+	start = std::clock();
+}
+void character::moveLeft() {
+	temp1 = -10 * duration*run_boost;
+	temp2 = x + temp1;
+	vel[0] = temp1*0.5;
+	x = temp2;
+	start = std::clock();
+}
+
+void character::holdingKey() {
+	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+}
+
+void character::setDuration(double dur) {
+	duration = dur;
+}
