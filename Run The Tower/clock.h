@@ -26,6 +26,8 @@ public:
 	myClock();
 	~myClock();
 	void Tick();
-	void Draw();
+	void drawClock();
+	void Update();
+	void flipDisplay();
 	void Init(clock_t clock);
 };

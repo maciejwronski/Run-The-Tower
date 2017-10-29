@@ -18,7 +18,11 @@
 #include "some_functions.h"
 #include "variables.h"
 #include "allegro_stuff.h"
+#include "map.h"
 
+map Map;
+character player;
+myClock gameClock;
 
 int pre_start_game() {
 
@@ -80,10 +84,7 @@ void initialize_bitmaps() {
 	exitbmp = al_load_bitmap("menu_images/exit.png");
 	menusquarebmp = al_load_bitmap("menu_images/choosen.png");
 	logobmp = al_load_bitmap("menu_images/logo.png");
-	brickbmp = al_load_bitmap("game_images/brick.jpg");
-	floorbmp = al_load_bitmap("game_images/floor.jpg");
 	font = al_load_font("fonts/times.ttf", 24, 0);
-	brick_width = al_get_bitmap_width(brickbmp);
 }
 void destroy_everything() {
 	al_destroy_display(display);
@@ -143,7 +144,8 @@ void menu_loop() {
 					al_clear_to_color(al_map_rgb(0, 0, 0));
 					keys[LEFT] = keys[RIGHT] = false;
 					player.Init();
-					newclock.Init(std::clock());
+					Map.Init();
+					gameClock.Init(std::clock());
 					break;
 				}
 				case 75: in_instructions = true; break;
@@ -180,6 +182,9 @@ void game_loop() {
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
+		Map.Update();
+		gameClock.Update();
+		player.Draw(player.getDirection());
 		if (keys[RIGHT] || keys[LEFT]) {
 			temp = ((std::clock() - start) / (double)CLOCKS_PER_SEC);
 			player.setDuration(temp);
@@ -201,14 +206,6 @@ void game_loop() {
 
 		}
 	}
-	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_draw_bitmap(brickbmp, START_WALL_X, 0, 0);
-	al_draw_bitmap(brickbmp, END_WALL_X, 0, 0);
-	al_draw_bitmap(floorbmp, START_FLOOR_X, START_FLOOR_Y, 0);
-	newclock.Draw();
-	newclock.Tick();
-	player.Draw(player.getDirection());
-	al_flip_display();
 }
 
 int main(void) {

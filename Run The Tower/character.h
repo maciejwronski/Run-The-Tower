@@ -48,4 +48,5 @@ public:
 	void moveRight();
 	void moveLeft();
 	void holdingKey();
+	void flipDisplay();
 };

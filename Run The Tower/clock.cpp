@@ -30,6 +30,14 @@ void myClock::Tick() {
 	y_c = (double)(50 * cos(current_degree));
 	al_draw_line(50, 75, 50 + x_c, 75 - y_c, al_map_rgb(RGB_clock[0], RGB_clock[1], RGB_clock[2]), 5);
 }
-void myClock::Draw() {
+void myClock::drawClock() {
 	al_draw_bitmap(clockbmp, 0, 20, 0);
+}
+void myClock::Update() {
+	drawClock();
+	Tick();
+	flipDisplay();
+}
+void myClock::flipDisplay() {
+	al_flip_display();
 }

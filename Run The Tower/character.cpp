@@ -107,6 +107,7 @@ void character::Draw(int direction) {
 		al_draw_bitmap(player_right, x, y, 0);
 		break;
 	}
+	flipDisplay();
 }
 void character::moveRight() {
 	temp1 = 10 * duration*run_boost;
@@ -129,4 +130,7 @@ void character::holdingKey() {
 
 void character::setDuration(double dur) {
 	duration = dur;
+}
+void character::flipDisplay() {
+	al_flip_display();
 }
