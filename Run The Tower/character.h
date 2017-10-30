@@ -47,6 +47,5 @@ public:
 	void Draw(int direction);
 	void moveRight();
 	void moveLeft();
-	void holdingKey();
 	void flipDisplay();
 };

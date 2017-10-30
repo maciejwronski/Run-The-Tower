@@ -4,10 +4,11 @@
 #include <math.h>
 #include <allegro5\allegro_primitives.h>
 
-#define MIDDLE_X_CLOCK 50
-#define MIDDLE_Y_CLOCK 75
-#define RADIUS_OF_CLOCK 50
-#define M_PI 3.14159265358979323846
+static int MIDDLE_X_CLOCK = 50;
+static int MIDDLE_Y_CLOCK = 75;
+static int RADIUS_OF_CLOCK = 50;
+static double M_PI = 3.14159265358979323846;
+
 
 class myClock {
 

@@ -30,14 +30,17 @@
     <ClCompile Include="map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Allegro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="allegro_stuff.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,6 +54,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Allegro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

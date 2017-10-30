@@ -124,10 +124,6 @@ void character::moveLeft() {
 	start = std::clock();
 }
 
-void character::holdingKey() {
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-}
-
 void character::setDuration(double dur) {
 	duration = dur;
 }

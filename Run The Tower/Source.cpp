@@ -1,124 +1,35 @@
 #pragma once
 
-#include <iostream>
-#include <ctime>
-#include <math.h>
-
-#include<allegro5\allegro.h>
-#include<allegro5\allegro_native_dialog.h>
-#include<allegro5\allegro_font.h>
-#include<allegro5\allegro_ttf.h>
-#include<allegro5\allegro_image.h>
-#include<allegro5\allegro_primitives.h>
-#include <allegro5\allegro_audio.h>
-#include <allegro5\allegro_acodec.h>
-#include <allegro5\monitor.h>
-#include "clock.h"
-#include "character.h"
-#include "some_functions.h"
-#include "variables.h"
-#include "allegro_stuff.h"
-#include "map.h"
+#include "includes.h"
+#include "Allegro.h"
 
 map Map;
 character player;
 myClock gameClock;
+menu MyMenu;
+Allegro allegro;
 
-int pre_start_game() {
 
-	if (!al_init()) {
-		int error;
-		printf("Allegro didnt load correctly. Program will exit\nPress any key to continue");
-		scanf_s("%i", &error);
-		return -1;
+void menuLoop() {
+	if (MyMenu.getMenu() == 1) {
+		MyMenu.drawMainMenu();
 	}
-	if (!al_install_audio()) {
-	int error;
-	printf("install_audio didnt  load correctly. Program will exit\nPress any key to continue");
-	scanf_s("%i", &error);
-	return -1;
+	else if (MyMenu.getMenu() == 2) {
+		MyMenu.drawInstructions();
 	}
-
-	if (!al_init_acodec_addon()) {
-		int error;
-		printf("Codec addon didnt load correctly. Program will exit\nPress any key to continue");
-		scanf_s("%i", &error);
-		return -1;
-	}
-	/*/	if (!al_reserve_samples(1)) {
-	int error;
-	printf("Reserve samples didnt load correctly. Program will exit\nPress any key to continue");
-	scanf_s("%i", &error);
-	return -1;
-	}
-	/*/
-	display = al_create_display(800, 600);
-	if (!display) {
-		printf("Display didnt load correctly. Program will exit\nPress any key to continue");
-		return -1;
-	}
-
-}
-
-void init_addons() {
-	al_install_mouse();
-	al_init_font_addon();
-	al_init_ttf_addon();
-	al_init_image_addon();
-	al_init_primitives_addon();
-	al_install_keyboard();
-	al_set_window_title(display, "Run The Tower");
-}
-
-void register_events_queue_timer() {
-	menu_event_queue = al_create_event_queue();
-	menu_timer = al_create_timer(DeltaTime);
-	al_register_event_source(menu_event_queue, al_get_keyboard_event_source());
-	al_register_event_source(menu_event_queue, al_get_timer_event_source(menu_timer));
-	al_start_timer(menu_timer);
-}
-void initialize_bitmaps() {
-	startbmp = al_load_bitmap("menu_images/start.png");
-	instructionsbmp = al_load_bitmap("menu_images/instructions.png");
-	optionsbmp = al_load_bitmap("menu_images/options.png");
-	exitbmp = al_load_bitmap("menu_images/exit.png");
-	menusquarebmp = al_load_bitmap("menu_images/choosen.png");
-	logobmp = al_load_bitmap("menu_images/logo.png");
-	font = al_load_font("fonts/times.ttf", 24, 0);
-}
-void destroy_everything() {
-	al_destroy_display(display);
-	al_destroy_timer(menu_timer);
-}
-
-void menu_loop() {
-	if (in_menu && !in_game && !in_instructions && !in_options) {
-		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_bitmap(logobmp, 0, 20, 0);
-		al_draw_bitmap(startbmp, 50, 300, 0);
-		al_draw_bitmap(instructionsbmp, 50, 350, 0);
-		al_draw_bitmap(optionsbmp, 50, 400, 0);
-		al_draw_bitmap(exitbmp, 50, 450, 0);
-		al_draw_bitmap(menusquarebmp, 20, 300 + main_menu_choosen, 0);
-	}
-	else if (in_menu && !in_game && in_instructions && !in_options) {
-		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_text(font, al_map_rgb(255, 255, 255), 640 / 2, (480 / 4), ALLEGRO_ALIGN_CENTRE, "Tutaj jakies instrukcje mordeczko!");
-	}
-	else if (in_menu && !in_game && !in_instructions && in_options) {
-		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_text(font, al_map_rgb(255, 255, 255), 640 / 2, (480 / 4), ALLEGRO_ALIGN_CENTRE, "Tutaj jakies opcje mordeczko!");
+	else if (MyMenu.getMenu() == 3) {
+		MyMenu.drawOptions();
 	}
 	ALLEGRO_EVENT ev;
 	al_wait_for_event(menu_event_queue, &ev);
 	if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 		switch (ev.keyboard.keycode) {
-		case ALLEGRO_KEY_UP: keys[UP] = true; if (!in_options && !in_game && !in_instructions) if (main_menu_choosen - 50 > 0) main_menu_choosen -= 50;  break; // adding values to position of bmp in range of 25/175
-		case ALLEGRO_KEY_DOWN: keys[DOWN] = true; if (!in_options && !in_game && !in_instructions) if (main_menu_choosen + 50 <= 175) main_menu_choosen += 50; break;
+		case ALLEGRO_KEY_UP: keys[UP] = true; if (MyMenu.getMenu() == 1) if (MyMenu.getMainMenuPick() - 50 > 0) MyMenu.setMainMenuPick(-50);  break; // adding values to position of bmp in range of 25/175
+		case ALLEGRO_KEY_DOWN: keys[DOWN] = true; if (MyMenu.getMenu() == 1) if (MyMenu.getMainMenuPick() + 50 <= 175) MyMenu.setMainMenuPick(50); break;
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true;  break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  break;
 		case ALLEGRO_KEY_ENTER:  break;
-		case ALLEGRO_KEY_ESCAPE: if (in_instructions) in_instructions = false; if (in_options) in_options = false; al_flip_display();  break;
+		case ALLEGRO_KEY_ESCAPE: if (MyMenu.getMenu() == 2) MyMenu.setMenu(1); if (MyMenu.getMenu() == 3) MyMenu.setMenu(1); al_flip_display();  break;
 		}
 	}
 	else if (ev.type == ALLEGRO_EVENT_KEY_UP)
@@ -129,28 +40,20 @@ void menu_loop() {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false; break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = false; break;
 		case ALLEGRO_KEY_ENTER:
-			if (!in_options && !in_game && !in_instructions) {
-				switch (main_menu_choosen) {
+			if (MyMenu.getMenu() == 1) {
+				switch (MyMenu.getMainMenuPick()) {
 				case 25: {
-					al_stop_timer(menu_timer);
-					al_destroy_event_queue(menu_event_queue);
-					game_event_queue = al_create_event_queue();
-					game_timer = al_create_timer(DeltaTime);
-					al_register_event_source(game_event_queue, al_get_keyboard_event_source());
-					al_register_event_source(game_event_queue, al_get_timer_event_source(game_timer));
-					al_start_timer(game_timer);
-					in_game = true;
-					in_menu = false;
-					al_clear_to_color(al_map_rgb(0, 0, 0));
-					keys[LEFT] = keys[RIGHT] = false;
-					player.Init();
-					Map.Init();
-					gameClock.Init(std::clock());
+					keys[LEFT] = keys[RIGHT] = false; // In case player is holding key, to prevent from megaboost
+					allegro.changeEvents(); // Menu event to game event
+					MyMenu.setMenu(4); // Starts game
+					Map.Init(); // Inits map
+					player.Init(); // Inits player
+					gameClock.Init(std::clock()); // Inits clock
 					break;
 				}
-				case 75: in_instructions = true; break;
-				case 125: in_options = true; break;
-				case 175: in_menu = false; break;
+				case 75: MyMenu.setMenu(2); break;
+				case 125: MyMenu.setMenu(3); break;
+				case 175: MyMenu.setMenu(0); break;
 				}
 			}
 			break;
@@ -159,7 +62,7 @@ void menu_loop() {
 	}
 	al_flip_display();
 }
-void game_loop() {
+void gameLoop() {
 	ALLEGRO_EVENT ev1;
 	al_wait_for_event(game_event_queue, &ev1);
 	if (ev1.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -193,7 +96,7 @@ void game_loop() {
 			player.updateJump();
 		}
 		if (keys[RIGHT]) {
-			if (!collision(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width)) {
+			if (!collision(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width )) {
 				player.moveRight();
 			}
 		}
@@ -209,16 +112,16 @@ void game_loop() {
 }
 
 int main(void) {
-	pre_start_game();
-	init_addons();
-	register_events_queue_timer();
-	initialize_bitmaps();
-	while (in_menu) {
-		menu_loop();
+	allegro.Conditions();
+	allegro.InitAddons();
+	allegro.registerQueueEvents();
+	MyMenu.Init();
+	while (MyMenu.getMenu() != 0 && MyMenu.getMenu() != 4) {
+		menuLoop();
 	}
-	while (in_game) {
-		game_loop();
+	while (MyMenu.getMenu() == 4) {
+		gameLoop();
 	}
-	destroy_everything();
+	allegro.Destroy();
 	return 0;
 }

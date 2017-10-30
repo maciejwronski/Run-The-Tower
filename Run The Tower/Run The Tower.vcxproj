@@ -121,9 +121,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Allegro.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="some_functions.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -131,10 +133,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="allegro_stuff.h" />
+    <ClInclude Include="Allegro.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="clock.h" />
+    <ClInclude Include="includes.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="some_functions.h" />
     <ClInclude Include="variables.h" />
   </ItemGroup>
