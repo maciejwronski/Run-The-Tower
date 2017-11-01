@@ -93,6 +93,7 @@ void gameLoop() {
 			player.setDuration(temp);
 		}
 		if (player.inAir()) {
+			printf("%f", player.getPositionY());
 			player.updateJump();
 		}
 		if (keys[RIGHT]) {

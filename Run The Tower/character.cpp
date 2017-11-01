@@ -61,14 +61,14 @@ void character::setVelocityY(float velY) {
 void character::startJump() {
 	if (onGround)
 	{
-		vel[1] = -12.0;
+		vel[1] = -11.0;
 		onGround = false;
 	}
 }
 void character::endJump()
 {
-	if (vel[1] < -6.0)
-		vel[1] = -6.0;
+	if (vel[1] < -11.0)
+		vel[1] = -11.0;
 }
 void character::updateJump() {
 	vel[1] += 0.5;
