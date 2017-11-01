@@ -23,17 +23,18 @@ class character {
 public:
 	character();
 	~character();
-	void Init();
 	bool isBound();
 	bool inAir();
+	bool isColliding(int pos_x1, int width_x1, int pos_x2, int width_x2);
 	float getPositionX();
 	float getPositionY();
 	int getWidth();
-	void setDirection(int num);
 	int getDirection();
 	int getHeight();
 	float getVelocityX();
 	float getVelocityY();
+	void Init();
+	void setDirection(int num);
 	void setPositionX(float position_x);
 	void setPositionY(float position_y);
 	void setVelocityX(float velX);

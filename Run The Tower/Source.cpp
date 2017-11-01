@@ -93,16 +93,15 @@ void gameLoop() {
 			player.setDuration(temp);
 		}
 		if (player.inAir()) {
-			printf("%f", player.getPositionY());
 			player.updateJump();
 		}
 		if (keys[RIGHT]) {
-			if (!collision(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width )) {
+			if (!player.isColliding(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width )) {
 				player.moveRight();
 			}
 		}
 		else if (keys[LEFT]) {
-			if (!collision(player.getPositionX(), player.getWidth(), START_WALL_X, brick_width)) {
+			if (!player.isColliding(player.getPositionX(), player.getWidth(), START_WALL_X, brick_width)) {
 				player.moveLeft();
 			}
 		}

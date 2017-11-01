@@ -126,7 +126,6 @@
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="menu.cpp" />
-    <ClCompile Include="some_functions.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +138,6 @@
     <ClInclude Include="includes.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="menu.h" />
-    <ClInclude Include="some_functions.h" />
     <ClInclude Include="variables.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
