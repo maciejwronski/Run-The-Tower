@@ -4,12 +4,14 @@ character::character() {}
 character::~character() {}
 
 void character::Init() {
-	player_left = al_load_bitmap("player_images/left.png");
-	player_right = al_load_bitmap("player_images/right.png");
 	x = 400;
 	y = 460;
 	vel[0] = 0;
 	vel[1] = 0;
+	score = 0;
+	player_left = al_load_bitmap("player_images/left.png");
+	player_right = al_load_bitmap("player_images/right.png");
+	font = al_load_font("fonts/times.ttf", 24, 0);
 	setWidth(al_get_bitmap_width(player_left));
 	setHeight(al_get_bitmap_height(player_left));
 }
@@ -107,6 +109,7 @@ void character::Draw(int direction) {
 		al_draw_bitmap(player_right, x, y, 0);
 		break;
 	}
+	al_draw_textf(font, al_map_rgb(255, 128, 0), 130, 500, ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
 	flipDisplay();
 }
 void character::moveRight() {
@@ -130,8 +133,8 @@ void character::setDuration(double dur) {
 void character::flipDisplay() {
 	al_flip_display();
 }
-bool character::isColliding(int pos_x1, int width_x1, int pos_x2, int width_x2){
+bool character::isColliding(int pos_x1, int width_x1, int pos_x2, int width_x2) {
 	if (pos_x1 + width_x1 >= pos_x2 && pos_x1 <= pos_x2 + width_x2)
-	return true;
+		return true;
 	else return false;
 }

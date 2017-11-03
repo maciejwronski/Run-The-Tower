@@ -16,13 +16,13 @@ void map::Walls() {
 
 void map::FirstBlocks() {
 	int count = 0;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < MAX_BLOCKS; i++) {
 		tab_width[i] = (rand() % MAX_RANDOM_X_SIZE) + MIN_RANDOM_X_SIZE;
 		while (tab_width[i] > MAX_RANDOM_X_SIZE) {
 			tab_width[i] = (rand() % MAX_RANDOM_X_SIZE) + MIN_RANDOM_X_SIZE;
 		}
 	}
-	for (int x = 0; x < 4; x++) {
+	for (int x = 0; x < MAX_BLOCKS; x++) {
 		for (int y= 0; y < 2; y++) {
 			if (y == 0) {
 				tab_axis[x][y] = rand() % END_WALL_X;
@@ -35,10 +35,10 @@ void map::FirstBlocks() {
 			}
 
 		count++;
-		}
 	}
+}
 void map::DrawFirstBlocks() {
-	for (int x = 0; x < 4; x++) {
+	for (int x = 0; x < MAX_BLOCKS; x++) {
 		al_draw_bitmap_region(floorbmp, 0, 0, tab_width[x], 31, tab_axis[x][0], tab_axis[x][1], 0);
 	}
 }
@@ -48,6 +48,7 @@ void map::Background() {
 void map::flipDisplay() {
 	al_flip_display();
 }
+
 void map::Update() {
 	Background();
 	Walls();

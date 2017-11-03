@@ -1,6 +1,7 @@
 #pragma once
 
 #include <allegro5\allegro_primitives.h>
+#include <allegro5\allegro_font.h>
 #include <ctime>
 static int temp1, temp2;
 
@@ -16,10 +17,11 @@ class character {
 	bool bound = false;
 	double duration;
 	int direction = 1; // 1 - left, 2 right
+	unsigned short score;
 
 	ALLEGRO_BITMAP *player_left = NULL;
 	ALLEGRO_BITMAP *player_right = NULL;
-
+	ALLEGRO_FONT *font = NULL;
 public:
 	character();
 	~character();

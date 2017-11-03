@@ -96,7 +96,7 @@ void gameLoop() {
 			player.updateJump();
 		}
 		if (keys[RIGHT]) {
-			if (!player.isColliding(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width )) {
+			if (!player.isColliding(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width)) {
 				player.moveRight();
 			}
 		}
