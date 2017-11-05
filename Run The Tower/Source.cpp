@@ -8,7 +8,7 @@ character player;
 myClock gameClock;
 menu MyMenu;
 Allegro allegro;
-
+block Block;
 
 void menuLoop() {
 	if (MyMenu.getMenu() == 1) {
@@ -48,6 +48,7 @@ void menuLoop() {
 					MyMenu.setMenu(4); // Starts game
 					Map.Init(); // Inits map
 					player.Init(); // Inits player
+					Block.Init();
 					gameClock.Init(std::clock()); // Inits clock
 					break;
 				}
@@ -69,8 +70,8 @@ void gameLoop() {
 		switch (ev1.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = true; start = std::clock(); player.setDirection(2);  break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = true;  start = std::clock(); player.setDirection(1); break;
-		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;  player.startJump(); break;
-		case ALLEGRO_KEY_UP: keys[UP] = true; player.startJump(); break;
+		case ALLEGRO_KEY_SPACE: keys[SPACE] = true;  player.startJump(Map, player); break;
+		case ALLEGRO_KEY_UP: keys[UP] = true; player.startJump( Map, player); break;
 
 		}
 	}
@@ -79,29 +80,28 @@ void gameLoop() {
 		switch (ev1.keyboard.keycode) {
 		case ALLEGRO_KEY_RIGHT: keys[RIGHT] = false; player.setDuration(0); break;
 		case ALLEGRO_KEY_LEFT: keys[LEFT] = false; player.setDuration(0); break;
-		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; player.endJump();break;
-		case ALLEGRO_KEY_UP: keys[UP] = false; player.endJump(); break;
+		case ALLEGRO_KEY_SPACE: keys[SPACE] = false; break;
+		case ALLEGRO_KEY_UP: keys[UP] = false; break;
 		}
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
-		Map.Update();
+		Map.Draw();
+		Block.DrawBlocks();
 		gameClock.Update();
-		player.Draw(player.getDirection());
+		player.DrawCharacter(player.getDirection());
+		player.updateJump(Block, player);
 		if (keys[RIGHT] || keys[LEFT]) {
 			temp = ((std::clock() - start) / (double)CLOCKS_PER_SEC);
 			player.setDuration(temp);
 		}
-		if (player.inAir()) {
-			player.updateJump();
-		}
 		if (keys[RIGHT]) {
-			if (!player.isColliding(player.getPositionX(), player.getWidth(), END_WALL_X, brick_width)) {
+			if (!Map.WallsCollidingWithPlayer(player, START_OF_RIGHT_WALL, brick_width)) {
 				player.moveRight();
 			}
 		}
 		else if (keys[LEFT]) {
-			if (!player.isColliding(player.getPositionX(), player.getWidth(), START_WALL_X, brick_width)) {
+			if (!Map.WallsCollidingWithPlayer(player, START_OF_LEFT_WALL, brick_width)) {
 				player.moveLeft();
 			}
 		}

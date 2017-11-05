@@ -8,4 +8,5 @@
 #include "variables.h"
 #include "map.h"
 #include "menu.h"
+#include "block.h"
 

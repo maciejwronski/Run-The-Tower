@@ -2,33 +2,26 @@
 
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_primitives.h>
-#include <ctime>
-static int START_WALL_X = 0; // start of left wall
-static int END_WALL_X = 718; // where right wall starts
-static int WALL_WIDTH = 82; // width of wall
+#include "character.h"
 
-static int START_FLOOR_X = 82; // where start-floor starts x axis
-static int START_FLOOR_Y = 530; // where start-floor starts y axis
+extern int START_OF_LEFT_WALL;// = 0; // start of left wall
+extern int START_OF_RIGHT_WALL;// = 718; // where right wall starts
+extern int WALL_WIDTH;// = 82; // width of wall
 
-static int MAX_RANDOM_X_SIZE = 250;
-static int MIN_RANDOM_X_SIZE = 100;
-static const int MAX_BLOCKS = 2000;
+extern int START_FLOOR_X;// = 82; // where start-floor starts x axis
+extern int START_FLOOR_Y;// = 530; // where start-floor starts y axis
 
 class map {
+	friend class character;
 	ALLEGRO_BITMAP *brickbmp = al_load_bitmap("game_images/brick.jpg");
 	ALLEGRO_BITMAP *floorbmp = al_load_bitmap("game_images/floor.jpg");
-	ALLEGRO_BITMAP *blockbmp = al_load_bitmap("game_images/first.png");
-	
-	float tab_axis[MAX_BLOCKS][2] = { 0 };
-	short tab_width[MAX_BLOCKS] = { 0 };
 public:
 
 	void Init();
-	void FirstBlocks();
-	void DrawFirstBlocks();
 	void Walls();
 	void Background();
-	void Update();
+	void Draw();
+	bool WallsCollidingWithPlayer(character& player, int pos_x2, int width_x2);
 	void flipDisplay();
 
 };

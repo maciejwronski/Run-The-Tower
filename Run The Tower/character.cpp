@@ -12,9 +12,10 @@ void character::Init() {
 	player_left = al_load_bitmap("player_images/left.png");
 	player_right = al_load_bitmap("player_images/right.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
-	setWidth(al_get_bitmap_width(player_left));
-	setHeight(al_get_bitmap_height(player_left));
+	width = al_get_bitmap_width(player_left);
+	height = al_get_bitmap_height(player_left);
 }
+/*/           GETTERS           /*/ 
 float character::getPositionX() {
 	return x;
 }
@@ -27,23 +28,18 @@ float character::getVelocityX() {
 float character::getVelocityY() {
 	return vel[1];
 }
-void character::setDirection(int num) {
-	direction = num;
-}
 int character::getWidth() {
 	return width;
 }
 int character::getHeight() {
 	return height;
 }
-bool character::isBound() {
-	return bound;
+int character::getDirection() {
+	return direction;
 }
-void character::setWidth(int pwidth) {
-	width = pwidth;
-}
-void character::setHeight(int pheight) {
-	height = pheight;
+/*             SETTERS          */
+void character::setDirection(int num) {
+	direction = num;
 }
 
 void character::setPositionX(float position_x) {
@@ -60,58 +56,10 @@ void character::setVelocityY(float velY) {
 	vel[1] = velY;
 }
 
-void character::startJump() {
-	if (onGround)
-	{
-		vel[1] = -11.0;
-		onGround = false;
-	}
+void character::setDuration(double dur) {
+	duration = dur;
 }
-void character::endJump()
-{
-	if (vel[1] < -11.0)
-		vel[1] = -11.0;
-}
-void character::updateJump() {
-	vel[1] += 0.5;
-	y += vel[1];
-	x += vel[0];
-	if (y > 460.0)
-	{
-		y = 460.0;
-		vel[1] = 0.0;
-		onGround = true;
-		vel[0] = 0.0;
-	}
-
-	if (x <= 82|| x >= 694) { /////////// 
-		vel[0] *= -1;
-		bound = true; 
-		if (direction == 1)
-			direction = 2;
-		else if (direction == 2)
-			direction = 1;
-	}
-}
-
-bool character::inAir() {
-	return !onGround;
-}
-int character::getDirection() {
-	return direction;
-}
-void character::Draw(int direction) {
-	switch (direction) {
-	case 1:
-		al_draw_bitmap(player_left, x, y, 0);
-		break;
-	case 2:
-		al_draw_bitmap(player_right, x, y, 0);
-		break;
-	}
-	al_draw_textf(font, al_map_rgb(255, 128, 0), 130, 500, ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
-	flipDisplay();
-}
+/*         MOVEMENT         */
 void character::moveRight() {
 	temp1 = 10 * duration*run_boost;
 	temp2 = x + temp1;
@@ -127,14 +75,55 @@ void character::moveLeft() {
 	start = std::clock();
 }
 
-void character::setDuration(double dur) {
-	duration = dur;
+void character::startJump(map& Map, character& player) {
+	if (onGround)
+	{
+		vel[1] = -11.0;
+		onGround = false;
+	}
+}
+void character::updateJump(block& Block, character& player) {
+	Block.CollidingWithPlayer(player);
+	if (!onGround) {
+		vel[1] += 0.5;
+		y += vel[1];
+		x += vel[0];
+	}
+
+	if (y > 460){
+		y = 460;
+		vel[1] = 0.0;
+		onGround = true;
+		vel[0] = 0.0;
+	}
+
+	if ((x + width >= START_OF_RIGHT_WALL && x <= WALL_WIDTH + START_OF_RIGHT_WALL) || (x + width >= START_OF_LEFT_WALL &&x <= START_OF_LEFT_WALL + WALL_WIDTH)){
+	vel[0] *= -1;
+	bound = true;
+	if (direction == 1)
+		direction = 2;
+	else if (direction == 2)
+		direction = 1;
+	}
+}
+void character::DrawCharacter(int direction) {
+	switch (direction) {
+	case 1:
+		al_draw_bitmap(player_left, x, y, 0);
+		break;
+	case 2:
+		al_draw_bitmap(player_right, x, y, 0);
+		break;
+	}
+	flipDisplay();
 }
 void character::flipDisplay() {
 	al_flip_display();
 }
-bool character::isColliding(int pos_x1, int width_x1, int pos_x2, int width_x2) {
-	if (pos_x1 + width_x1 >= pos_x2 && pos_x1 <= pos_x2 + width_x2)
-		return true;
-	else return false;
+/*          BOOLS        */
+bool character::isBound() {
+	return bound;
+}
+bool character::inAir() {
+	return !onGround;
 }

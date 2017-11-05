@@ -3,12 +3,18 @@
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_font.h>
 #include <ctime>
+#include "map.h"
+#include "block.h"
+
 static int temp1, temp2;
 
 static float run_boost = 0.8; // used for run-boost
 static clock_t start; //
 
 class character {
+	friend class block;
+	friend class map;
+
 	float x, y;
 	float vel[2] = { 0.0, 0.0 };
 	int width;
@@ -25,9 +31,7 @@ class character {
 public:
 	character();
 	~character();
-	bool isBound();
-	bool inAir();
-	bool isColliding(int pos_x1, int width_x1, int pos_x2, int width_x2);
+	void Init();
 	float getPositionX();
 	float getPositionY();
 	int getWidth();
@@ -35,20 +39,18 @@ public:
 	int getHeight();
 	float getVelocityX();
 	float getVelocityY();
-	void Init();
 	void setDirection(int num);
 	void setPositionX(float position_x);
 	void setPositionY(float position_y);
 	void setVelocityX(float velX);
 	void setVelocityY(float velY);
-	void setWidth(int pwidth);
-	void setHeight(int pheight);
 	void setDuration(double dur);
-	void startJump();
-	void endJump();
-	void updateJump();
-	void Draw(int direction);
+	void startJump(map& Map, character& player);
+	void updateJump(block& Block, character& player);
+	void DrawCharacter(int direction);
 	void moveRight();
 	void moveLeft();
 	void flipDisplay();
+	bool isBound();
+	bool inAir();
 };
