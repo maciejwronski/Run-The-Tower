@@ -9,21 +9,27 @@
 static int temp1, temp2;
 
 static float run_boost = 0.8; // used for run-boost
+static float up_gravity = 0.45;
+static float falling_gravity = 0.2;
 static clock_t start; //
 
 class character {
+	bool keys[5] = { false };
+	enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
 	friend class block;
 	friend class map;
+	bool jumped;
 
 	float x, y;
 	float vel[2] = { 0.0, 0.0 };
 	int width;
 	int height;
+	bool falling;
 	bool onGround = true;
 	bool bound = false;
 	double duration;
 	int direction = 1; // 1 - left, 2 right
-	unsigned short score;
+	int score = 0;
 
 	ALLEGRO_BITMAP *player_left = NULL;
 	ALLEGRO_BITMAP *player_right = NULL;
@@ -48,8 +54,8 @@ public:
 	void startJump(map& Map, character& player);
 	void updateJump(block& Block, character& player);
 	void DrawCharacter(int direction);
-	void moveRight();
-	void moveLeft();
+	void moveRight(block&Block, character& player);
+	void moveLeft(block&Block, character& player);
 	void flipDisplay();
 	bool isBound();
 	bool inAir();

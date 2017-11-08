@@ -97,12 +97,12 @@ void gameLoop() {
 		}
 		if (keys[RIGHT]) {
 			if (!Map.WallsCollidingWithPlayer(player, START_OF_RIGHT_WALL, brick_width)) {
-				player.moveRight();
+				player.moveRight(Block, player);
 			}
 		}
 		else if (keys[LEFT]) {
 			if (!Map.WallsCollidingWithPlayer(player, START_OF_LEFT_WALL, brick_width)) {
-				player.moveLeft();
+				player.moveLeft(Block, player);
 			}
 		}
 		else if (keys[SPACE] || keys[UP]) {

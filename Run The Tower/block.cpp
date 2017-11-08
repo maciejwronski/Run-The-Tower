@@ -1,25 +1,32 @@
 #include "block.h"
-
+#include <iostream>
 void block::Init() {
 	srand(time(NULL));
 	floorbmp = al_load_bitmap("game_images/floor.jpg");
 	CreateBlocks();
 }
-void block::CollidingWithPlayer(character& player) { // kolizja gracza z bloczkami
-	for (int i = 0; i < MAX_BLOCKS; i++) {
-		if (player.x + player.width >= coordinate[i][0] && player.x <= coordinate[i][0] + width[i] && player.y + player.height >= coordinate[i][1] && player.y <= coordinate[i][1] + block_height) {
+
+void block::CollidingWithPlayer(character& player) { 
+	for (int i = 1; i < MAX_BLOCKS; i++) {
+		if (player.x + player.width >= coordinateX[i] && player.x <= coordinateX[i] + width[i] && player.y + player.height >= coordinateY[i] && player.y <= coordinateY[i] + block_height) {
+			printf("Colliding");
 			player.onGround = true;
-		}
-		else {
-			player.onGround = false;
+			player.y = coordinateY[i] - player.height;
+			player.score += 10;
 		}
 	}
-
 }
-void block::CreateBlocks() { // tworzenie bloczków na mapie, 0 to pod³oga
+bool block::CheckIfPlayerIsFlying(character& player) {
+	for (int i = 1; i < MAX_BLOCKS; i++) {
+		if ((player.x + player.width < coordinateX[i] || player.x > coordinateX[i] + width[i]) && player.y + player.height >= coordinateY[i] && player.y <= coordinateY[i] + block_height) {
+			return true;
+		}
+	}
+}
+void block::CreateBlocks() {
 	int count = 0;
-	coordinate[0][0] = START_FLOOR_X;
-	coordinate[0][1] = START_FLOOR_Y;
+	coordinateX[0] = START_FLOOR_X;
+	coordinateY[0] = START_FLOOR_Y;
 	width[0] = al_get_bitmap_width(floorbmp);
 	for (int i = 1; i < MAX_BLOCKS; i++) {
 		width[i] = (rand() % MAX_RANDOM_X_SIZE) + MIN_RANDOM_X_SIZE;
@@ -27,24 +34,21 @@ void block::CreateBlocks() { // tworzenie bloczków na mapie, 0 to pod³oga
 			width[i] = (rand() % MAX_RANDOM_X_SIZE) + MIN_RANDOM_X_SIZE;
 		}
 	}
-	for (int x = 1; x < MAX_BLOCKS; x++) {
-		for (int y = 0; y < 2; y++) {
-			if (y == 0) {
-				coordinate[x][y] = rand() % START_OF_RIGHT_WALL;
-				while (coordinate[x][y] < WALL_WIDTH || coordinate[x][y] + width[x] >= START_OF_RIGHT_WALL) {
-					coordinate[x][y] = rand() % START_OF_RIGHT_WALL;
+	for (int i = 1; i < MAX_BLOCKS; i++) {
+				coordinateX[i] = rand() % START_OF_RIGHT_WALL;
+				while (coordinateX[i] < WALL_WIDTH || coordinateX[i] + width[i] >= START_OF_RIGHT_WALL) {
+					coordinateX[i] = rand() % START_OF_RIGHT_WALL;
 				}
-			}
-			else if (y == 1)
-				coordinate[x][y] = 430 - count * 116;
+			coordinateY[i] = 430 - count * 116;
+			count++;
 		}
+	for (int i = 0; i < MAX_BLOCKS; i++)
+		printf("X: %f, Y:%f, W:%f\n", coordinateX[i], coordinateY[i], width[i]);
 
-		count++;
-	}
 }
 void block::DrawBlocks() {
-	for (int x = 1; x < MAX_BLOCKS; x++) {
-		al_draw_bitmap_region(floorbmp, 0, 0, width[x], block_height, coordinate[x][0], coordinate[x][1], 0);
+	for (int i = 1; i < MAX_BLOCKS; i++) {
+		al_draw_bitmap_region(floorbmp, 0, 0, width[i], block_height, coordinateX[i], coordinateY[i], 0);
 	}
 	al_flip_display();
 }

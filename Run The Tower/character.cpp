@@ -1,5 +1,5 @@
 #include "character.h"
-
+#include <iostream>
 character::character() {}
 character::~character() {}
 
@@ -60,14 +60,24 @@ void character::setDuration(double dur) {
 	duration = dur;
 }
 /*         MOVEMENT         */
-void character::moveRight() {
+void character::moveRight(block&Block, character& player) {
+	if (Block.CheckIfPlayerIsFlying(player) && !jumped && !falling) {
+		vel[1] = 0;
+		vel[0] = 0;
+		falling = true;
+	}
 	temp1 = 10 * duration*run_boost;
 	temp2 = x + temp1;
 	vel[0] = temp1*0.5;
 	x = temp2;
 	start = std::clock();
 }
-void character::moveLeft() {
+void character::moveLeft(block&Block, character& player) {
+	if (Block.CheckIfPlayerIsFlying(player) && !jumped && !falling) {
+		vel[1] = 0;
+		vel[0] = 0;
+		falling = true;
+	}
 	temp1 = -10 * duration*run_boost;
 	temp2 = x + temp1;
 	vel[0] = temp1*0.5;
@@ -80,21 +90,29 @@ void character::startJump(map& Map, character& player) {
 	{
 		vel[1] = -11.0;
 		onGround = false;
+		jumped = true;
 	}
 }
 void character::updateJump(block& Block, character& player) {
-	Block.CollidingWithPlayer(player);
-	if (!onGround) {
-		vel[1] += 0.5;
+	if (!onGround || falling) {
+		if (vel[1] < 0)
+			vel[1] += up_gravity;
+		else
+			vel[1] += falling_gravity;
 		y += vel[1];
 		x += vel[0];
+		if (vel[1] > 0) {
+			Block.CollidingWithPlayer(player);
+			jumped = false;
+		}
 	}
-
 	if (y > 460){
 		y = 460;
 		vel[1] = 0.0;
 		onGround = true;
 		vel[0] = 0.0;
+		jumped = false;
+		falling = false;
 	}
 
 	if ((x + width >= START_OF_RIGHT_WALL && x <= WALL_WIDTH + START_OF_RIGHT_WALL) || (x + width >= START_OF_LEFT_WALL &&x <= START_OF_LEFT_WALL + WALL_WIDTH)){
