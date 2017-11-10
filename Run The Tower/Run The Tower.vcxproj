@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClCompile Include="Allegro.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="clock.cpp" />
     <ClCompile Include="map.cpp" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Allegro.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="clock.h" />
     <ClInclude Include="includes.h" />

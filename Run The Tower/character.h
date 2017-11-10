@@ -11,9 +11,11 @@ static int temp1, temp2;
 static float run_boost = 0.8; // used for run-boost
 static float up_gravity = 0.45;
 static float falling_gravity = 0.2;
+static float block_point = 10;
 static clock_t start; //
 
 class character {
+	friend class block;
 	bool keys[5] = { false };
 	enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
 	friend class block;
@@ -51,6 +53,8 @@ public:
 	void setVelocityX(float velX);
 	void setVelocityY(float velY);
 	void setDuration(double dur);
+	void DrawScore();
+	void updateScore(character& player, int i);
 	void startJump(map& Map, character& player);
 	void updateJump(block& Block, character& player);
 	void DrawCharacter(int direction);

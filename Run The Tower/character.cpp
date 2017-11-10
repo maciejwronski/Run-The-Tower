@@ -124,6 +124,13 @@ void character::updateJump(block& Block, character& player) {
 		direction = 1;
 	}
 }
+void character::updateScore(character&player, int i) {
+	if (player.score / block_point <= i)
+		player.score = i * block_point;
+}
+void character::DrawScore() {
+	al_draw_textf(font, al_map_rgb(255, 128, 0), 130, 500, ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
+}
 void character::DrawCharacter(int direction) {
 	switch (direction) {
 	case 1:
@@ -133,6 +140,7 @@ void character::DrawCharacter(int direction) {
 		al_draw_bitmap(player_right, x, y, 0);
 		break;
 	}
+	DrawScore();
 	flipDisplay();
 }
 void character::flipDisplay() {
