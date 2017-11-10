@@ -9,4 +9,5 @@
 #include "map.h"
 #include "menu.h"
 #include "block.h"
+#include "camera.h"
 

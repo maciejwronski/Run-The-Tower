@@ -8,11 +8,12 @@ static int MIDDLE_X_CLOCK = 50;
 static int MIDDLE_Y_CLOCK = 75;
 static int RADIUS_OF_CLOCK = 50;
 static double M_PI = 3.14159265358979323846;
-
+static float constCameraBoost = 1.0;
 
 class myClock {
-
+	friend class camera;
 	int my_time;
+	float camera_boost;
 	int old_time = 34;
 	bool first_tick = true;
 	const int RGB_clock[3] = { 0,0,0 }; // clock line constants
@@ -26,9 +27,9 @@ class myClock {
 public:
 	myClock();
 	~myClock();
-	void Tick();
-	void drawClock();
-	void Update();
+	void Tick(float* CameraPosition);
+	void Draw(float* CameraPosition);
+	void Update(float* CameraPosition);
 	void flipDisplay();
 	void Init(clock_t clock);
 };

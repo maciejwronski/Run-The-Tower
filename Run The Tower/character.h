@@ -16,6 +16,7 @@ static clock_t start; //
 
 class character {
 	friend class block;
+	friend class camera;
 	bool keys[5] = { false };
 	enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
 	friend class block;
@@ -53,11 +54,11 @@ public:
 	void setVelocityX(float velX);
 	void setVelocityY(float velY);
 	void setDuration(double dur);
-	void DrawScore();
+	void DrawScore(float* CameraPosition);
 	void updateScore(character& player, int i);
 	void startJump(map& Map, character& player);
 	void updateJump(block& Block, character& player);
-	void DrawCharacter(int direction);
+	void DrawCharacter(int direction, float* CameraPosition);
 	void moveRight(block&Block, character& player);
 	void moveLeft(block&Block, character& player);
 	void flipDisplay();

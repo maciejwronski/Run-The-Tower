@@ -9,6 +9,9 @@ myClock gameClock;
 menu MyMenu;
 Allegro allegro;
 block Block;
+camera Camera;
+
+ALLEGRO_TRANSFORM cameratrans;
 
 void menuLoop() {
 	if (MyMenu.getMenu() == 1) {
@@ -86,11 +89,13 @@ void gameLoop() {
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
-		Map.Draw();
+		Map.Draw(CameraPosition);
 		Block.DrawBlocks();
-		gameClock.Update();
-		player.DrawCharacter(player.getDirection());
+		gameClock.Update(CameraPosition);
+		player.DrawCharacter(player.getDirection(), CameraPosition);
 		player.updateJump(Block, player);
+		Camera.Update(player, gameClock, CameraPosition);
+		Camera.Translation(cameratrans, CameraPosition);
 		if (keys[RIGHT] || keys[LEFT]) {
 			temp = ((std::clock() - start) / (double)CLOCKS_PER_SEC);
 			player.setDuration(temp);

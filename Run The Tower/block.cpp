@@ -9,7 +9,6 @@ void block::Init() {
 void block::CollidingWithPlayer(character& player) { 
 	for (int i = 1; i < MAX_BLOCKS; i++) {
 		if (player.x + player.width > coordinateX[i] && player.x < coordinateX[i] + width[i] && player.y + player.height >= coordinateY[i] && player.y <= coordinateY[i] + block_height && (player.y + player.height < block_height + coordinateY[i])) {
-			printf("Colliding");
 			player.onGround = true;
 			player.y = coordinateY[i] - player.height;
 			player.updateScore(player,i);
@@ -50,5 +49,4 @@ void block::DrawBlocks() {
 	for (int i = 1; i < MAX_BLOCKS; i++) {
 		al_draw_bitmap_region(floorbmp, 0, 0, width[i], block_height, coordinateX[i], coordinateY[i], 0);
 	}
-	al_flip_display();
 }

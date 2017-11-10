@@ -8,6 +8,7 @@ ALLEGRO_TIMER *game_timer = NULL;
 ALLEGRO_EVENT_QUEUE *game_event_queue = NULL;
 
 float DeltaTime = 1.0 / FPS;
+
 int Allegro::Conditions()
 {
 

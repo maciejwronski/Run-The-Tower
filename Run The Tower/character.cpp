@@ -128,10 +128,10 @@ void character::updateScore(character&player, int i) {
 	if (player.score / block_point <= i)
 		player.score = i * block_point;
 }
-void character::DrawScore() {
-	al_draw_textf(font, al_map_rgb(255, 128, 0), 130, 500, ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
+void character::DrawScore(float* CameraPosition) {
+	al_draw_textf(font, al_map_rgb(255, 128, 0), 130+CameraPosition[0], 500+CameraPosition[1], ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
 }
-void character::DrawCharacter(int direction) {
+void character::DrawCharacter(int direction, float* CameraPosition) {
 	switch (direction) {
 	case 1:
 		al_draw_bitmap(player_left, x, y, 0);
@@ -140,7 +140,7 @@ void character::DrawCharacter(int direction) {
 		al_draw_bitmap(player_right, x, y, 0);
 		break;
 	}
-	DrawScore();
+	DrawScore(CameraPosition);
 	flipDisplay();
 }
 void character::flipDisplay() {

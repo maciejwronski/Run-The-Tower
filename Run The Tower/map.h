@@ -18,10 +18,9 @@ class map {
 public:
 
 	void Init();
-	void Walls();
 	void Background();
-	void Draw();
+	void Walls(float* CameraPosition);
+	void Draw(float* CameraPosition);
 	bool WallsCollidingWithPlayer(character& player, int pos_x2, int width_x2);
-	void flipDisplay();
 
 };
