@@ -8,28 +8,29 @@ static int MIDDLE_X_CLOCK = 50;
 static int MIDDLE_Y_CLOCK = 75;
 static int RADIUS_OF_CLOCK = 50;
 static double M_PI = 3.14159265358979323846;
-static float constCameraBoost = 1.0;
+static float constCameraBoost = 1.0; // Camera's bonus speed after passing 30 seconds
 
-class myClock {
-	friend class camera;
-	int my_time;
-	float camera_boost;
-	int old_time = 34;
+class MyClock {
+	friend class Camera;
 	bool first_tick = true;
 	const int RGB_clock[3] = { 0,0,0 }; // clock line constants
+	int my_time;
+	int degree = 0;
+	int old_time = 34;
+	float camera_boost;
 	double x_c, y_c;
 	double current_degree = 0;
-	int degree = 0;
 	
 	clock_t my_clock;
 	ALLEGRO_BITMAP *clockbmp = NULL;
 
 public:
-	myClock();
-	~myClock();
+	MyClock();
+	~MyClock();
 	void Tick(float* CameraPosition);
 	void Draw(float* CameraPosition);
 	void Update(float* CameraPosition);
 	void flipDisplay();
 	void Init(clock_t clock);
+	void Destroy();
 };

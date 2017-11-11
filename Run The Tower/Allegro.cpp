@@ -67,6 +67,8 @@ void Allegro::registerQueueEvents() {
 void Allegro::Destroy() {
 	al_destroy_display(display);
 	al_destroy_timer(menu_timer);
+	al_destroy_timer(game_timer);
+	al_destroy_event_queue(game_event_queue);
 }
 
 void Allegro::changeEvents() {

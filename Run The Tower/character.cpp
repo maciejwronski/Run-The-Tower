@@ -1,9 +1,8 @@
 #include "character.h"
-#include <iostream>
-character::character() {}
-character::~character() {}
+Character::Character() {}
+Character::~Character() {}
 
-void character::Init() {
+void Character::Init() {
 	x = 400;
 	y = 460;
 	vel[0] = 0;
@@ -16,52 +15,56 @@ void character::Init() {
 	height = al_get_bitmap_height(player_left);
 }
 /*/           GETTERS           /*/ 
-float character::getPositionX() {
+float Character::getPositionX() {
 	return x;
 }
-float character::getPositionY() {
+float Character::getPositionY() {
 	return y;
 }
-float character::getVelocityX() {
+float Character::getVelocityX() {
 	return vel[0];
 }
-float character::getVelocityY() {
+float Character::getVelocityY() {
 	return vel[1];
 }
-int character::getWidth() {
+int Character::getWidth() {
 	return width;
 }
-int character::getHeight() {
+int Character::getHeight() {
 	return height;
 }
-int character::getDirection() {
+int Character::getScore()
+{
+	return score;
+}
+int Character::getDirection() {
 	return direction;
 }
 /*             SETTERS          */
-void character::setDirection(int num) {
+void Character::setDirection(int num) {
 	direction = num;
 }
 
-void character::setPositionX(float position_x) {
+void Character::setPositionX(float position_x) {
 	x = position_x;
 }
-void character::setPositionY(float position_y) {
+void Character::setPositionY(float position_y) {
 	y = position_y;
 }
 
-void character::setVelocityX(float velX) {
+void Character::setVelocityX(float velX) {
 	vel[0] = velX;
 }
-void character::setVelocityY(float velY) {
+void Character::setVelocityY(float velY) {
 	vel[1] = velY;
 }
 
-void character::setDuration(double dur) {
+void Character::setDuration(double dur) {
 	duration = dur;
 }
 /*         MOVEMENT         */
-void character::moveRight(block&Block, character& player) {
-	if (Block.CheckIfPlayerIsFlying(player) && !jumped && !falling) {
+void Character::moveRight(Block&block, Character& player) {
+	if (block.CheckIfPlayerIsFlying(player) && !jumped && !falling) {
 		vel[1] = 0;
 		vel[0] = 0;
 		falling = true;
@@ -72,8 +75,8 @@ void character::moveRight(block&Block, character& player) {
 	x = temp2;
 	start = std::clock();
 }
-void character::moveLeft(block&Block, character& player) {
-	if (Block.CheckIfPlayerIsFlying(player) && !jumped && !falling) {
+void Character::moveLeft(Block&block, Character& player) {
+	if (block.CheckIfPlayerIsFlying(player) && !jumped && !falling) {
 		vel[1] = 0;
 		vel[0] = 0;
 		falling = true;
@@ -85,7 +88,7 @@ void character::moveLeft(block&Block, character& player) {
 	start = std::clock();
 }
 
-void character::startJump(map& Map, character& player) {
+void Character::startJump() {
 	if (onGround)
 	{
 		vel[1] = -11.0;
@@ -93,7 +96,7 @@ void character::startJump(map& Map, character& player) {
 		jumped = true;
 	}
 }
-void character::updateJump(block& Block, character& player) {
+void Character::updateJump(Block& block, Character& player) {
 	if (!onGround || falling) {
 		if (vel[1] < 0)
 			vel[1] += up_gravity;
@@ -101,16 +104,16 @@ void character::updateJump(block& Block, character& player) {
 			vel[1] += falling_gravity;
 		y += vel[1];
 		x += vel[0];
-		if (vel[1] > 0) {
-			Block.CollidingWithPlayer(player);
+		if (vel[1] >= 0) {
+			block.CollidingWithPlayer(player);
 			jumped = false;
 		}
 	}
 	if (y > 460){
 		y = 460;
+		vel[0] = 0.0;
 		vel[1] = 0.0;
 		onGround = true;
-		vel[0] = 0.0;
 		jumped = false;
 		falling = false;
 	}
@@ -124,14 +127,14 @@ void character::updateJump(block& Block, character& player) {
 		direction = 1;
 	}
 }
-void character::updateScore(character&player, int i) {
+void Character::updateScore(Character&player, int i) {
 	if (player.score / block_point <= i)
 		player.score = i * block_point;
 }
-void character::DrawScore(float* CameraPosition) {
+void Character::DrawScore(float* CameraPosition) {
 	al_draw_textf(font, al_map_rgb(255, 128, 0), 130+CameraPosition[0], 500+CameraPosition[1], ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
 }
-void character::DrawCharacter(int direction, float* CameraPosition) {
+void Character::DrawCharacter(int direction, float* CameraPosition) {
 	switch (direction) {
 	case 1:
 		al_draw_bitmap(player_left, x, y, 0);
@@ -143,13 +146,18 @@ void character::DrawCharacter(int direction, float* CameraPosition) {
 	DrawScore(CameraPosition);
 	flipDisplay();
 }
-void character::flipDisplay() {
+void Character::flipDisplay() {
 	al_flip_display();
 }
 /*          BOOLS        */
-bool character::isBound() {
+bool Character::isBound() {
 	return bound;
 }
-bool character::inAir() {
+bool Character::inAir() {
 	return !onGround;
+}
+void Character::Destroy() {
+	al_destroy_bitmap(player_left);
+	al_destroy_bitmap(player_right);
+	al_destroy_font(font);
 }

@@ -11,8 +11,8 @@ extern int WALL_WIDTH;// = 82; // width of wall
 extern int START_FLOOR_X;// = 82; // where start-floor starts x axis
 extern int START_FLOOR_Y;// = 530; // where start-floor starts y axis
 
-class map {
-	friend class character;
+class Map {
+	friend class Character;
 	ALLEGRO_BITMAP *brickbmp = al_load_bitmap("game_images/brick.jpg");
 	ALLEGRO_BITMAP *floorbmp = al_load_bitmap("game_images/floor.jpg");
 public:
@@ -21,6 +21,7 @@ public:
 	void Background();
 	void Walls(float* CameraPosition);
 	void Draw(float* CameraPosition);
-	bool WallsCollidingWithPlayer(character& player, int pos_x2, int width_x2);
+	void Destroy();
+	bool WallsCollidingWithPlayer(Character& player, int pos_x2, int width_x2);
 
 };

@@ -3,7 +3,7 @@
 #include "allegro5\allegro.h"
 #include "allegro5\allegro_font.h"
 
-class menu {
+class Menu {
 	int whichMenu = 1; // 0 - EXIT 1 - Main, 2 - Instructions, 3 - Options, 4 - inGame
 	int mainMenuPick = 25;
 	bool inInstructions;
@@ -21,10 +21,9 @@ public:
 	void drawMainMenu();
 	void drawInstructions();
 	void drawOptions();
-
-	void setMenu(int numb);
-	int getMenu();
-
 	void setMainMenuPick(int numb);
+	void setMenu(int numb);
+	void Destroy();
+	int getMenu();
 	int getMainMenuPick();
 };

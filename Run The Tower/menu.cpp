@@ -1,6 +1,6 @@
 #include "menu.h"
 
-void menu::Init() {
+void Menu::Init() {
 	startbmp = al_load_bitmap("menu_images/start.png");
 	instructionsbmp = al_load_bitmap("menu_images/instructions.png");
 	optionsbmp = al_load_bitmap("menu_images/options.png");
@@ -9,7 +9,7 @@ void menu::Init() {
 	logobmp = al_load_bitmap("menu_images/logo.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
 }
-void menu::drawMainMenu() {
+void Menu::drawMainMenu() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_bitmap(logobmp, 0, 20, 0);
 	al_draw_bitmap(startbmp, 50, 300, 0);
@@ -18,27 +18,34 @@ void menu::drawMainMenu() {
 	al_draw_bitmap(exitbmp, 50, 450, 0);
 	al_draw_bitmap(menusquarebmp, 20, 300 + mainMenuPick, 0);
 }
-void menu::drawInstructions() {
+void Menu::drawInstructions() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_text(font, al_map_rgb(255, 255, 255), 640 / 2, (480 / 4), ALLEGRO_ALIGN_CENTRE, "Tutaj jakies instrukcje mordeczko!");
 }
-void menu::drawOptions() {
+void Menu::drawOptions() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_text(font, al_map_rgb(255, 255, 255), 640 / 2, (480 / 4), ALLEGRO_ALIGN_CENTRE, "Tutaj jakies opcje mordeczko!");
 }
 
-void menu::setMenu(int numb) {
+void Menu::setMenu(int numb) {
 	whichMenu = numb;
 }
 
-int menu::getMenu() {
-	return whichMenu;
-}
-
-void menu::setMainMenuPick(int numb) {
+void Menu::setMainMenuPick(int numb) {
 	mainMenuPick += numb;
 }
-
-int menu::getMainMenuPick() {
+void Menu::Destroy() {
+	al_destroy_bitmap(startbmp);
+	al_destroy_bitmap(instructionsbmp);
+	al_destroy_bitmap(optionsbmp);
+	al_destroy_bitmap(exitbmp);
+	al_destroy_bitmap(menusquarebmp);
+	al_destroy_bitmap(logobmp);
+	al_destroy_font(font);
+}
+int Menu::getMainMenuPick() {
 	return mainMenuPick;
+}
+int Menu::getMenu() {
+	return whichMenu;
 }
