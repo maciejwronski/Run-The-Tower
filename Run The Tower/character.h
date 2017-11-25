@@ -5,6 +5,7 @@
 #include <ctime>
 #include "block.h"
 #include "map.h"
+#include "camera.h"
 
 static int temp1, temp2;
 
@@ -18,7 +19,6 @@ class Character {
 	friend class Block;
 	friend class Camera;
 	friend class Map;
-
 
 	bool keys[5] = { false };
 	bool jumped;

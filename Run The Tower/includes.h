@@ -11,3 +11,4 @@
 #include "menu.h"
 #include "block.h"
 #include "camera.h"
+#include "gameEnd.h"

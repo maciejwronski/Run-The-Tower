@@ -12,6 +12,7 @@ float DeltaTime = 1.0 / FPS;
 Allegro::Allegro() {
 	Conditions();
 	InitAddons();
+	registerQueueEvents();
 }
 int Allegro::Conditions()
 {
@@ -78,10 +79,18 @@ Allegro::~Allegro() {
 
 void Allegro::changeEvents() {
 	al_stop_timer(menu_timer);
-	al_destroy_event_queue(menu_event_queue);
 	game_event_queue = al_create_event_queue();
 	game_timer = al_create_timer(DeltaTime);
 	al_register_event_source(game_event_queue, al_get_keyboard_event_source());
 	al_register_event_source(game_event_queue, al_get_timer_event_source(game_timer));
 	al_start_timer(game_timer);
+}
+void Allegro::changeEvents2() {
+	al_stop_timer(game_timer);
+	menu_event_queue = al_create_event_queue();
+	menu_timer = al_create_timer(DeltaTime);
+	al_register_event_source(menu_event_queue, al_get_keyboard_event_source());
+	al_register_event_source(menu_event_queue, al_get_timer_event_source(menu_timer));
+	al_start_timer(menu_timer);
+
 }

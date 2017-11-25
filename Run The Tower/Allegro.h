@@ -26,4 +26,5 @@ public:
 	void InitAddons();
 	void registerQueueEvents();
 	void changeEvents();
+	void changeEvents2();
 };

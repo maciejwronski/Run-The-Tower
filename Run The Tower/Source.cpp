@@ -93,6 +93,11 @@ void gameLoop() {
 			camera.Update(character, myClock, camera.GetCameraPos());
 			camera.Translation(cameratrans, camera.GetCameraPos());
 			myClock.Update(camera.GetCameraPos());
+			if (camera.playerHasFallenDown(map, character) == true) {
+				GameEnd gameEnd;
+				gameEnd.drawScore(character);
+				menu.setMenu(0);
+			}
 		}
 		if (keys[RIGHT] || keys[LEFT]) {
 			temp = ((std::clock() - start) / (double)CLOCKS_PER_SEC);
@@ -108,14 +113,10 @@ void gameLoop() {
 				character.moveLeft(block, character);
 			}
 		}
-		else if (keys[SPACE] || keys[UP]) {
-
-		}
 	}
 }
 
 int main(void) {
-	allegro.registerQueueEvents();
 	while (menu.getMenu() != 0 && menu.getMenu() != 4) {
 		menuLoop();
 	}

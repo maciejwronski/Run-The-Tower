@@ -1,5 +1,5 @@
 #include "character.h"
-
+#include <iostream>
 Character::Character() {
 	x = 400;
 	y = 460;
