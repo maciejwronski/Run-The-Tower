@@ -3,11 +3,11 @@
 #include "includes.h"
 #include "Allegro.h"
 
-Map map;
+Allegro allegro;
 Character character;
+Map map;
 MyClock myClock;
 Menu menu;
-Allegro allegro;
 Block block;
 Camera camera;
 ALLEGRO_TRANSFORM cameratrans;
@@ -48,9 +48,6 @@ void menuLoop() {
 					keys[LEFT] = keys[RIGHT] = false; // In case player is holding key, to prevent from megaboost
 					allegro.changeEvents(); // Menu event to game event
 					menu.setMenu(4); // Starts game
-					map.Init(); // Inits map
-					character.Init(); // Inits player
-					block.Init(); // inits blocks
 					myClock.Init(std::clock()); // Inits clock
 					break;
 				}
@@ -90,12 +87,12 @@ void gameLoop() {
 	{
 		map.Draw(camera.GetCameraPos());
 		block.DrawBlocks();
-		myClock.Update(camera.GetCameraPos());
 		character.DrawCharacter(character.getDirection(), camera.GetCameraPos());
 		character.updateJump(block, character);
-		if(camera.CameraShouldStart(character)){
+		if(camera.CameraShouldStart(map, character)){
 			camera.Update(character, myClock, camera.GetCameraPos());
 			camera.Translation(cameratrans, camera.GetCameraPos());
+			myClock.Update(camera.GetCameraPos());
 		}
 		if (keys[RIGHT] || keys[LEFT]) {
 			temp = ((std::clock() - start) / (double)CLOCKS_PER_SEC);
@@ -118,21 +115,12 @@ void gameLoop() {
 }
 
 int main(void) {
-	allegro.Conditions();
-	allegro.InitAddons();
 	allegro.registerQueueEvents();
-	menu.Init();
 	while (menu.getMenu() != 0 && menu.getMenu() != 4) {
 		menuLoop();
 	}
 	while (menu.getMenu() == 4) {
 		gameLoop();
 	}
-	allegro.Destroy();
-	block.Destroy();
-	character.Destroy();
-	myClock.Destroy();
-	map.Destroy();
-	menu.Destroy();
 	return 0;
 }

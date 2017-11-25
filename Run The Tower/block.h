@@ -13,17 +13,21 @@ static const int MAX_BLOCKS = 1000;
 
 class Block {
 	friend class Character;
-	float coordinateX[MAX_BLOCKS] = { 0 };
-	float coordinateY[MAX_BLOCKS] = { 0 };
-	float width[MAX_BLOCKS] = { 0 };
+	friend class Bonus;
+	float coordinateX[MAX_BLOCKS];
+	float coordinateY[MAX_BLOCKS];
+	float width[MAX_BLOCKS];
 
-	ALLEGRO_BITMAP *floorbmp = al_load_bitmap("game_images/floor.jpg");
+	ALLEGRO_BITMAP *floorbmp;
 public:
-	void Init();
+	Block();
+	~Block();
+	float* GetCoordinateX();
+	float* GetCoordinateY();
+	float* GetWidth();
 	void CreateBlocks();
 	void DrawBlocks();
 	void CollidingWithPlayer(Character& player);
-	void Destroy();
 	bool CheckIfPlayerIsFlying(Character& player);
 };
 

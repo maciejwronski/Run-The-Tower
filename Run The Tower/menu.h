@@ -4,26 +4,26 @@
 #include "allegro5\allegro_font.h"
 
 class Menu {
-	int whichMenu = 1; // 0 - EXIT 1 - Main, 2 - Instructions, 3 - Options, 4 - inGame
-	int mainMenuPick = 25;
+	int whichMenu; // 0 - EXIT 1 - Main, 2 - Instructions, 3 - Options, 4 - inGame
+	int mainMenuPick;
 	bool inInstructions;
 	bool inOptions;
 
-	ALLEGRO_BITMAP *startbmp = NULL;
-	ALLEGRO_BITMAP *instructionsbmp = NULL;
-	ALLEGRO_BITMAP *optionsbmp = NULL;
-	ALLEGRO_BITMAP *exitbmp = NULL;
-	ALLEGRO_BITMAP *menusquarebmp = NULL;
-	ALLEGRO_BITMAP *logobmp = NULL;
-	ALLEGRO_FONT *font = NULL;
+	ALLEGRO_BITMAP *startbmp;
+	ALLEGRO_BITMAP *instructionsbmp;
+	ALLEGRO_BITMAP *optionsbmp;
+	ALLEGRO_BITMAP *exitbmp;
+	ALLEGRO_BITMAP *menusquarebmp;
+	ALLEGRO_BITMAP *logobmp;
+	ALLEGRO_FONT *font;
 public:
-	void Init();
+	Menu();
+	~Menu();
 	void drawMainMenu();
 	void drawInstructions();
 	void drawOptions();
 	void setMainMenuPick(int numb);
 	void setMenu(int numb);
-	void Destroy();
 	int getMenu();
 	int getMainMenuPick();
 };

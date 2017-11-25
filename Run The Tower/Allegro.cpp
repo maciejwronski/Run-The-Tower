@@ -9,6 +9,10 @@ ALLEGRO_EVENT_QUEUE *game_event_queue = NULL;
 
 float DeltaTime = 1.0 / FPS;
 
+Allegro::Allegro() {
+	Conditions();
+	InitAddons();
+}
 int Allegro::Conditions()
 {
 
@@ -64,11 +68,12 @@ void Allegro::registerQueueEvents() {
 	al_start_timer(menu_timer);
 }
 
-void Allegro::Destroy() {
-	al_destroy_display(display);
+Allegro::~Allegro() {
 	al_destroy_timer(menu_timer);
 	al_destroy_timer(game_timer);
-	al_destroy_event_queue(game_event_queue);
+	if(game_event_queue != NULL)
+		al_destroy_event_queue(game_event_queue);
+	al_destroy_display(display);
 }
 
 void Allegro::changeEvents() {

@@ -1,18 +1,23 @@
 #include "character.h"
-Character::Character() {}
-Character::~Character() {}
 
-void Character::Init() {
+Character::Character() {
 	x = 400;
 	y = 460;
 	vel[0] = 0;
 	vel[1] = 0;
+	score = 0;
+	direction = 1;
 	score = 0;
 	player_left = al_load_bitmap("player_images/left.png");
 	player_right = al_load_bitmap("player_images/right.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
 	width = al_get_bitmap_width(player_left);
 	height = al_get_bitmap_height(player_left);
+}
+Character::~Character() {
+	al_destroy_bitmap(player_left);
+	al_destroy_bitmap(player_right);
+	al_destroy_font(font);
 }
 /*/           GETTERS           /*/ 
 float Character::getPositionX() {
@@ -106,7 +111,6 @@ void Character::updateJump(Block& block, Character& player) {
 		x += vel[0];
 		if (vel[1] >= 0) {
 			block.CollidingWithPlayer(player);
-			jumped = false;
 		}
 	}
 	if (y > 460){
@@ -155,9 +159,4 @@ bool Character::isBound() {
 }
 bool Character::inAir() {
 	return !onGround;
-}
-void Character::Destroy() {
-	al_destroy_bitmap(player_left);
-	al_destroy_bitmap(player_right);
-	al_destroy_font(font);
 }

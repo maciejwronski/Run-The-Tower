@@ -1,16 +1,19 @@
 #include "clock.h"
 
 MyClock::MyClock() {
-
+	first_tick = true;
+	degree = 0;
+	old_time = 34;
+	current_degree = 0;
+	camera_boost = 2;
+	clockbmp = al_load_bitmap("game_images/clock.png");
 }
 MyClock::~MyClock() {
-
+	al_destroy_bitmap(clockbmp);
 }
 
 void MyClock::Init(clock_t clock) {
 	my_clock = clock;
-	camera_boost = 2;
-	clockbmp = al_load_bitmap("game_images/clock.png");
 }
 void MyClock::Tick(float* CameraPosition) {
 	my_time = (int)(std::clock() - my_clock) / (double)CLOCKS_PER_SEC;
@@ -42,7 +45,4 @@ void MyClock::Update(float* CameraPosition) {
 }
 void MyClock::flipDisplay() {
 	al_flip_display();
-}
-void MyClock::Destroy() {
-	al_destroy_bitmap(clockbmp);
 }

@@ -20,9 +20,10 @@ extern ALLEGRO_EVENT_QUEUE *game_event_queue;
 
 class Allegro {
 public:
+	Allegro();
+	~Allegro();
 	int Conditions();
 	void InitAddons();
 	void registerQueueEvents();
-	void Destroy();
 	void changeEvents();
 };

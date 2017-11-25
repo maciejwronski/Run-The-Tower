@@ -27,16 +27,16 @@ class Character {
 	bool bound = false;
 
 	float x, y;
-	float vel[2] = { 0.0, 0.0 };
+	float vel[2];
 	double duration;
 	int width;
 	int height;
-	int direction = 1; // 1 - left, 2 right
-	int score = 0;
+	int direction;
+	int score;
 
-	ALLEGRO_BITMAP *player_left = NULL;
-	ALLEGRO_BITMAP *player_right = NULL;
-	ALLEGRO_FONT *font = NULL;
+	ALLEGRO_BITMAP *player_left;
+	ALLEGRO_BITMAP *player_right;
+	ALLEGRO_FONT *font;
 public:
 	Character();
 	~Character();
@@ -50,8 +50,6 @@ public:
 	float getPositionY();
 	float getVelocityX();
 	float getVelocityY();
-	void Init();
-	void Destroy();
 	void setDirection(int num);
 	void setPositionX(float position_x);
 	void setPositionY(float position_y);
