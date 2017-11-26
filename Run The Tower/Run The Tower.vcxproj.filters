@@ -39,7 +39,7 @@
     <ClCompile Include="camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameEnd.cpp">
+    <ClCompile Include="bonus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,7 +74,7 @@
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gameEnd.h">
+    <ClInclude Include="bonus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

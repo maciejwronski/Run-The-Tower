@@ -11,6 +11,7 @@ Menu menu;
 Block block;
 Camera camera;
 ALLEGRO_TRANSFORM cameratrans;
+Bonus bonus;
 
 void menuLoop() {
 	if (menu.getMenu() == 1) {
@@ -49,6 +50,7 @@ void menuLoop() {
 					allegro.changeEvents(); // Menu event to game event
 					menu.setMenu(4); // Starts game
 					myClock.Init(std::clock()); // Inits clock
+					bonus.createBonus(block);
 					break;
 				}
 				case 75: menu.setMenu(2); break;
@@ -88,14 +90,14 @@ void gameLoop() {
 		map.Draw(camera.GetCameraPos());
 		block.DrawBlocks();
 		character.DrawCharacter(character.getDirection(), camera.GetCameraPos());
+		bonus.drawBonus();
+		bonus.admitBonus(character);
 		character.updateJump(block, character);
 		if(camera.CameraShouldStart(map, character)){
 			camera.Update(character, myClock, camera.GetCameraPos());
 			camera.Translation(cameratrans, camera.GetCameraPos());
 			myClock.Update(camera.GetCameraPos());
-			if (camera.playerHasFallenDown(map, character) == true) {
-				GameEnd gameEnd;
-				gameEnd.drawScore(character);
+			if (camera.playerHasFallenDown(map, character)) {
 				menu.setMenu(0);
 			}
 		}

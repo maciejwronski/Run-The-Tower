@@ -33,6 +33,7 @@ class Character {
 	int height;
 	int direction;
 	int score;
+	int bonusPoints;
 
 	ALLEGRO_BITMAP *player_left;
 	ALLEGRO_BITMAP *player_right;
@@ -46,6 +47,7 @@ public:
 	int getDirection();
 	int getHeight();
 	int getScore();
+	int getBonusPoints();
 	float getPositionX();
 	float getPositionY();
 	float getVelocityX();
@@ -56,6 +58,7 @@ public:
 	void setVelocityX(float velX);
 	void setVelocityY(float velY);
 	void setDuration(double dur);
+	void addBonusPoints(int num);
 	void DrawScore(float* CameraPosition);
 	void updateScore(Character& player, int i);
 	void startJump();

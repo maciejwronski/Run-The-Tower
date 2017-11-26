@@ -8,6 +8,7 @@ Character::Character() {
 	score = 0;
 	direction = 1;
 	score = 0;
+	bonusPoints = 0;
 	player_left = al_load_bitmap("player_images/left.png");
 	player_right = al_load_bitmap("player_images/right.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
@@ -41,6 +42,10 @@ int Character::getHeight() {
 int Character::getScore()
 {
 	return score;
+}
+int Character::getBonusPoints()
+{
+	return bonusPoints;
 }
 int Character::getDirection() {
 	return direction;
@@ -133,7 +138,7 @@ void Character::updateJump(Block& block, Character& player) {
 }
 void Character::updateScore(Character&player, int i) {
 	if (player.score / block_point <= i)
-		player.score = i * block_point;
+		player.score = i * block_point + bonusPoints;
 }
 void Character::DrawScore(float* CameraPosition) {
 	al_draw_textf(font, al_map_rgb(255, 128, 0), 130+CameraPosition[0], 500+CameraPosition[1], ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
@@ -159,4 +164,7 @@ bool Character::isBound() {
 }
 bool Character::inAir() {
 	return !onGround;
+}
+void Character::addBonusPoints(int num) {
+	bonusPoints += num;
 }

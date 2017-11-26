@@ -135,10 +135,10 @@
   <ItemGroup>
     <ClCompile Include="Allegro.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="bonus.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="clock.cpp" />
-    <ClCompile Include="gameEnd.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -149,10 +149,10 @@
   <ItemGroup>
     <ClInclude Include="Allegro.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="bonus.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="clock.h" />
-    <ClInclude Include="gameEnd.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="menu.h" />
