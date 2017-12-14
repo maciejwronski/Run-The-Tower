@@ -30,4 +30,3 @@ public:
 	float* getWidth();
 	void drawBlocks();
 };
-

@@ -22,7 +22,7 @@ class MyClock {
 	float cameraBoost;
 	double xC, yC;
 	double currentDegree;
-	
+
 	clock_t my_clock;
 	ALLEGRO_BITMAP *clockbmp;
 

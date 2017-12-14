@@ -25,7 +25,7 @@ void Bonus::createBonus(Block& block) {
 
 void Bonus::drawBonus() {
 	for (int i = 0; i < bonusNumber; i++) {
-		if (given[i] == false){
+		if (given[i] == false) {
 			switch (bonusType[i]) {
 			case 0:al_draw_filled_circle(positionX[i], positionY[i] - block_height, constansToDrawBonus, al_map_rgb(rand() % 255, rand() % 255, rand() % 255)); break;
 			case 1: al_draw_filled_rectangle(positionX[i], positionY[i] - block_height, positionX[i] + constansToDrawBonus, positionY[i] - constansToDrawBonus - block_height, al_map_rgb(rand() % 255, rand() % 255, rand() % 255)); break;
@@ -49,4 +49,3 @@ void Bonus::admitBonus(Character& character) {
 		}
 	}
 }
-

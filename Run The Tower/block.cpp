@@ -41,8 +41,8 @@ void Block::collidingWithPlayer(Character& player) {
 		if (player.getPositionX() + player.getWidth() > coordinateX[i] && player.getPositionX() < coordinateX[i] + width[i] && player.getPositionY() + player.getHeight() >= coordinateY[i] && player.getPositionY() <= coordinateY[i] + block_height && (player.getPositionY() + player.getHeight() < block_height + coordinateY[i])) {
 			player.onGround = true;
 			player.jumped = false;
-			player.setPositionY(coordinateY[i] - player.getHeight());
-			player.updateScore(player, i);
+			player.setPositionY(coordinateY[i] - player.bitmapHeight);
+			player.updateScore(i);
 			player.setVelocityX(0);
 			player.setVelocityY(0);
 		}

@@ -23,7 +23,7 @@ Character::~Character() {
 	al_destroy_bitmap(player_right);
 	al_destroy_font(font);
 }
-/*/           GETTERS           /*/ 
+/*/           GETTERS           /*/
 float Character::getPositionX() {
 	return coordinateX;
 }
@@ -48,11 +48,11 @@ float Character::getHeight() {
 	return bitmapHeight;
 }
 
-int Character::getScore(){
+int Character::getScore() {
 	return totalScore;
 }
 
-int Character::getBonusPoints(){
+int Character::getBonusPoints() {
 	return bonusPoints;
 }
 int Character::getDirection() {
@@ -114,7 +114,7 @@ void Character::moveLeft(Block&block, Character& player) {
 }
 
 void Character::startJump() {
-	if (onGround){
+	if (onGround) {
 		velocity[1] = -11.0;
 		onGround = false;
 		jumped = true;
@@ -134,7 +134,7 @@ void Character::updateJump(Block& block, Character& player) {
 		}
 	}
 
-	if (coordinateY > 460){
+	if (coordinateY > 460) {
 		coordinateY = 460;
 		velocity[0] = 0.0;
 		velocity[1] = 0.0;
@@ -143,23 +143,23 @@ void Character::updateJump(Block& block, Character& player) {
 		falling = false;
 	}
 
-	if ((coordinateX + bitmapWidth >= START_OF_RIGHT_WALL && coordinateX <= WALL_WIDTH + START_OF_RIGHT_WALL) || (coordinateX + bitmapWidth >= START_OF_LEFT_WALL && coordinateX <= START_OF_LEFT_WALL + WALL_WIDTH)){
-	velocity[0] *= -1;
-	bound = true;
-	if (movingInDirection == 1)
-		movingInDirection = 2;
-	else if (movingInDirection == 2)
-		movingInDirection = 1;
+	if ((coordinateX + bitmapWidth >= START_OF_RIGHT_WALL && coordinateX <= WALL_WIDTH + START_OF_RIGHT_WALL) || (coordinateX + bitmapWidth >= START_OF_LEFT_WALL && coordinateX <= START_OF_LEFT_WALL + WALL_WIDTH)) {
+		velocity[0] *= -1;
+		bound = true;
+		if (movingInDirection == 1)
+			movingInDirection = 2;
+		else if (movingInDirection == 2)
+			movingInDirection = 1;
 	}
 }
 
-void Character::updateScore(Character&player, int i) {
-	if (player.totalScore / block_point <= i)
-		player.totalScore = i * block_point + bonusPoints;
+void Character::updateScore(int i) {
+	if (totalScore / block_point <= i)
+		totalScore = i * block_point + bonusPoints;
 }
 
 void Character::drawScore(float* CameraPosition) {
-	al_draw_textf(font, al_map_rgb(255, 128, 0), 130+CameraPosition[0], 500+CameraPosition[1], ALLEGRO_ALIGN_CENTRE, "Score: %d", totalScore);
+	al_draw_textf(font, al_map_rgb(255, 128, 0), 130 + CameraPosition[0], 500 + CameraPosition[1], ALLEGRO_ALIGN_CENTRE, "Score: %d", totalScore);
 }
 
 void Character::drawCharacter(int direction, float* CameraPosition) {

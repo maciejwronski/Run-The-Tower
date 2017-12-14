@@ -13,7 +13,7 @@ Map::~Map() {
 }
 
 bool Map::wallsCollidingWithPlayer(Character& player, int pos_x2, int width_x2) {
-	if (player.coordinateX + player.coordinateY >= pos_x2 && player.coordinateX <= pos_x2 + width_x2) {
+	if (player.getPositionX() + player.getWidth() >= pos_x2 && player.getPositionX() <= pos_x2 + width_x2) {
 		return true;
 	}
 	else return false;

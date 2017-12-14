@@ -7,7 +7,7 @@ Camera::Camera() {
 
 Camera::~Camera() { }
 
-void Camera::update(Character&player, MyClock& clock,float* CameraPosition) {
+void Camera::update(Character&player, MyClock& clock, float* CameraPosition) {
 	CameraPosition[1] -= 1 * clock.cameraBoost;
 }
 
@@ -27,11 +27,11 @@ bool Camera::playerHasFallenDown(Map& map, Character& character) {
 			return true;
 		else
 			return false;
-		}
+	}
 	return false;
 }
 
-bool Camera::cameraShouldStart(Map& map, Character& character){
+bool Camera::cameraShouldStart(Map& map, Character& character) {
 	if (character.getScore() >= startCameraFromPlayerPoints) {
 		map.mapFalling = true;
 		return true;

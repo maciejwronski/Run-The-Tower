@@ -61,7 +61,7 @@ public:
 	void setDuration(double dur);
 	void addBonusPoints(int num);
 	void drawScore(float* CameraPosition);
-	void updateScore(Character& player, int i);
+	void updateScore(int i);
 	void startJump();
 	void updateJump(Block& Block, Character& player);
 	void drawCharacter(int direction, float* CameraPosition);

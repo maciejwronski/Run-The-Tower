@@ -3,7 +3,7 @@
 MyClock::MyClock() {
 	firstTick = true;
 	degree = 0;
-	newTime = -1; 
+	newTime = -1;
 	currentDegree = 0;
 	cameraBoost = 2;
 	clockbmp = al_load_bitmap("game_images/clock.png");
@@ -52,6 +52,6 @@ void MyClock::flipDisplay() {
 	al_flip_display();
 }
 
-float MyClock :: radToDeg(int deg) {
+float MyClock::radToDeg(int deg) {
 	return deg*M_PI / 180;
 }

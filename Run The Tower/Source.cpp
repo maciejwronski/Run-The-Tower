@@ -94,7 +94,7 @@ void gameLoop() {
 		bonus.drawBonus();
 		bonus.admitBonus(character);
 		character.updateJump(block, character);
-		if(camera.cameraShouldStart(map, character)){
+		if (camera.cameraShouldStart(map, character)) {
 			camera.update(character, myClock, camera.getCameraPos());
 			camera.translation(cameratrans, camera.getCameraPos());
 			myClock.update(camera.getCameraPos());
@@ -103,7 +103,7 @@ void gameLoop() {
 			}
 		}
 		if (keys[RIGHT] || keys[LEFT]) {
-			temp = ((std::clock() - start) /  static_cast<double>(CLOCKS_PER_SEC));
+			temp = ((std::clock() - start) / static_cast<double>(CLOCKS_PER_SEC));
 			character.setDuration(temp);
 		}
 		if (keys[RIGHT]) {
