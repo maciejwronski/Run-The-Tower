@@ -24,7 +24,8 @@ class Bonus {
 public:
 	Bonus();
 	~Bonus();
-	void createBonus(Block& block);
+
 	void drawBonus();
+	void createBonus(Block& block);
 	void admitBonus(Character& character);
 };

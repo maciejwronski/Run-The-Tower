@@ -7,7 +7,7 @@
 #include "map.h"
 #include "camera.h"
 
-static int temp1, temp2;
+static int temp1, temp2; // used for acceleration
 
 static float run_boost = 0.8; // used for run-boost
 static float up_gravity = 0.45; // Gravity for player, when jumped
@@ -20,19 +20,20 @@ class Character {
 	friend class Camera;
 	friend class Map;
 
-	bool keys[5] = { false };
 	bool jumped;
 	bool falling;
 	bool onGround = true;
 	bool bound = false;
 
-	float x, y;
-	float vel[2];
-	double duration;
-	int width;
-	int height;
-	int direction;
-	int score;
+	float coordinateX, coordinateY;
+	float velocity[2];
+	float bitmapWidth;
+	float bitmapHeight;
+
+	double keyTimeHold;
+
+	int movingInDirection;
+	int totalScore;
 	int bonusPoints;
 
 	ALLEGRO_BITMAP *player_left;

@@ -29,7 +29,7 @@ float* Block::getWidth() {
 
 bool Block::checkIfPlayerIsFlying(Character& player) {
 	for (int i = 1; i < MAX_BLOCKS; i++) {
-		if ((player.x + player.width < coordinateX[i] || player.x > coordinateX[i] + width[i]) && player.y + player.height >= coordinateY[i] && player.y <= coordinateY[i] + block_height) {
+		if ((player.getPositionX() + player.getWidth() < coordinateX[i] || player.getPositionX() > coordinateX[i] + width[i]) && player.getPositionY() + player.getHeight() >= coordinateY[i] && player.getHeight() <= coordinateY[i] + block_height) {
 			return true;
 		}
 	}
@@ -38,13 +38,13 @@ bool Block::checkIfPlayerIsFlying(Character& player) {
 
 void Block::collidingWithPlayer(Character& player) {
 	for (int i = 1; i < MAX_BLOCKS; i++) {
-		if (player.x + player.width > coordinateX[i] && player.x < coordinateX[i] + width[i] && player.y + player.height >= coordinateY[i] && player.y <= coordinateY[i] + block_height && (player.y + player.height < block_height + coordinateY[i])) {
+		if (player.getPositionX() + player.getWidth() > coordinateX[i] && player.getPositionX() < coordinateX[i] + width[i] && player.getPositionY() + player.getHeight() >= coordinateY[i] && player.getPositionY() <= coordinateY[i] + block_height && (player.getPositionY() + player.getHeight() < block_height + coordinateY[i])) {
 			player.onGround = true;
 			player.jumped = false;
-			player.y = coordinateY[i] - player.height;
+			player.setPositionY(coordinateY[i] - player.getHeight());
 			player.updateScore(player, i);
-			player.vel[0] = 0;
-			player.vel[1] = 0;
+			player.setVelocityX(0);
+			player.setVelocityY(0);
 		}
 	}
 }

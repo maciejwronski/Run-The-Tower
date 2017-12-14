@@ -5,7 +5,6 @@
 #include <ctime>
 #include "character.h"
 
-
 static int MAX_RANDOM_X_SIZE = 250;
 static int MIN_RANDOM_X_SIZE = 100;
 static float block_height = 31;
@@ -18,6 +17,10 @@ class Block {
 	float coordinateY[MAX_BLOCKS];
 	float width[MAX_BLOCKS];
 
+	void createBlocks();
+	void collidingWithPlayer(Character& player);
+	bool checkIfPlayerIsFlying(Character& player);
+
 	ALLEGRO_BITMAP *floorbmp;
 public:
 	Block();
@@ -25,9 +28,6 @@ public:
 	float* getCoordinateX();
 	float* getCoordinateY();
 	float* getWidth();
-	bool checkIfPlayerIsFlying(Character& player);
-	void createBlocks();
 	void drawBlocks();
-	void collidingWithPlayer(Character& player);
 };
 

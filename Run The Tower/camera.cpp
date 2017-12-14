@@ -19,11 +19,11 @@ void Camera::translation(ALLEGRO_TRANSFORM &transform, float* CameraPosition) {
 
 bool Camera::playerHasFallenDown(Map& map, Character& character) {
 	if (map.mapFalling) {
-		if (character.y > 0) {
-			if ((abs(CameraPosition[1]) - abs(character.y - 128) >= 450))
+		if (character.getPositionY() > 0) {
+			if ((abs(CameraPosition[1]) - abs(character.getPositionY() - 128) >= 450))
 				return true;
 		}
-		else if ((abs(CameraPosition[1]) - abs(character.y) >= 600))
+		else if ((abs(CameraPosition[1]) - abs(character.getPositionY()) >= 600))
 			return true;
 		else
 			return false;

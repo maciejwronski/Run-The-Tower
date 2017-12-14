@@ -3,19 +3,19 @@
 
 
 Character::Character() {
-	x = 400;
-	y = 460;
-	vel[0] = 0;
-	vel[1] = 0;
-	score = 0;
-	direction = 1;
-	score = 0;
+	coordinateX = 400;
+	coordinateY = 460;
+
+	velocity[0] = 0;
+	velocity[1] = 0;
+	totalScore = 0;
+	movingInDirection = 1;
 	bonusPoints = 0;
 	player_left = al_load_bitmap("player_images/left.png");
 	player_right = al_load_bitmap("player_images/right.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
-	width = al_get_bitmap_width(player_left);
-	height = al_get_bitmap_height(player_left);
+	bitmapWidth = al_get_bitmap_width(player_left);
+	bitmapHeight = al_get_bitmap_height(player_left);
 }
 
 Character::~Character() {
@@ -25,96 +25,97 @@ Character::~Character() {
 }
 /*/           GETTERS           /*/ 
 float Character::getPositionX() {
-	return x;
+	return coordinateX;
 }
 
 float Character::getPositionY() {
-	return y;
+	return coordinateY;
 }
 
 float Character::getVelocityX() {
-	return vel[0];
+	return velocity[0];
 }
 
 float Character::getVelocityY() {
-	return vel[1];
+	return velocity[1];
 }
 
 float Character::getWidth() {
-	return width;
+	return bitmapWidth;
 }
 
 float Character::getHeight() {
-	return height;
+	return bitmapHeight;
 }
 
 int Character::getScore(){
-	return score;
+	return totalScore;
 }
 
 int Character::getBonusPoints(){
 	return bonusPoints;
 }
 int Character::getDirection() {
-	return direction;
+	return movingInDirection;
 }
 
 /*             SETTERS          */
 void Character::setDirection(int num) {
-	direction = num;
+	movingInDirection = num;
 }
 
 void Character::setPositionX(float position_x) {
-	x = position_x;
+	coordinateX = position_x;
 }
 
 void Character::setPositionY(float position_y) {
-	y = position_y;
+	coordinateY = position_y;
 }
 
 void Character::setVelocityX(float velX) {
-	vel[0] = velX;
+	velocity[0] = velX;
 }
 
 void Character::setVelocityY(float velY) {
-	vel[1] = velY;
+	velocity[1] = velY;
 }
 
 void Character::setDuration(double dur) {
-	duration = dur;
+	keyTimeHold = dur;
 }
 
 /*         MOVEMENT         */
 void Character::moveRight(Block&block, Character& player) {
 	if (block.checkIfPlayerIsFlying(player) && !jumped && !falling) {
-		vel[1] = 0;
-		vel[0] = 0;
+		velocity[1] = 0;
+		velocity[0] = 0;
 		falling = true;
 	}
-	temp1 = 10 * duration*run_boost;
-	temp2 = x + temp1;
-	vel[0] = temp1*0.5;
-	x = temp2;
+
+	temp1 = 10 * keyTimeHold*run_boost; //boosting player's speed
+	temp2 = coordinateX + temp1;
+	velocity[0] = temp1*0.5;
+	coordinateX = temp2;
 	start = std::clock();
 }
 
 void Character::moveLeft(Block&block, Character& player) {
 	if (block.checkIfPlayerIsFlying(player) && !jumped && !falling) {
-		vel[1] = 0;
-		vel[0] = 0;
+		velocity[1] = 0;
+		velocity[0] = 0;
 		falling = true;
 	}
-	temp1 = -10 * duration*run_boost;
-	temp2 = x + temp1;
-	vel[0] = temp1*0.5;
-	x = temp2;
+
+	temp1 = -10 * keyTimeHold*run_boost; // boosting player's speed
+	temp2 = coordinateX + temp1;
+	velocity[0] = temp1*0.5;
+	coordinateX = temp2;
 	start = std::clock();
 }
 
 void Character::startJump() {
-	if (onGround)
-	{
-		vel[1] = -11.0;
+	if (onGround){
+		velocity[1] = -11.0;
 		onGround = false;
 		jumped = true;
 	}
@@ -122,51 +123,52 @@ void Character::startJump() {
 
 void Character::updateJump(Block& block, Character& player) {
 	if (!onGround || falling) {
-		if (vel[1] < 0)
-			vel[1] += up_gravity;
+		if (velocity[1] < 0)
+			velocity[1] += up_gravity;
 		else
-			vel[1] += falling_gravity;
-		y += vel[1];
-		x += vel[0];
-		if (vel[1] >= 0) {
+			velocity[1] += falling_gravity;
+		coordinateY += velocity[1];
+		coordinateX += velocity[0];
+		if (velocity[1] >= 0) {
 			block.collidingWithPlayer(player);
 		}
 	}
-	if (y > 460){
-		y = 460;
-		vel[0] = 0.0;
-		vel[1] = 0.0;
+
+	if (coordinateY > 460){
+		coordinateY = 460;
+		velocity[0] = 0.0;
+		velocity[1] = 0.0;
 		onGround = true;
 		jumped = false;
 		falling = false;
 	}
 
-	if ((x + width >= START_OF_RIGHT_WALL && x <= WALL_WIDTH + START_OF_RIGHT_WALL) || (x + width >= START_OF_LEFT_WALL &&x <= START_OF_LEFT_WALL + WALL_WIDTH)){
-	vel[0] *= -1;
+	if ((coordinateX + bitmapWidth >= START_OF_RIGHT_WALL && coordinateX <= WALL_WIDTH + START_OF_RIGHT_WALL) || (coordinateX + bitmapWidth >= START_OF_LEFT_WALL && coordinateX <= START_OF_LEFT_WALL + WALL_WIDTH)){
+	velocity[0] *= -1;
 	bound = true;
-	if (direction == 1)
-		direction = 2;
-	else if (direction == 2)
-		direction = 1;
+	if (movingInDirection == 1)
+		movingInDirection = 2;
+	else if (movingInDirection == 2)
+		movingInDirection = 1;
 	}
 }
 
 void Character::updateScore(Character&player, int i) {
-	if (player.score / block_point <= i)
-		player.score = i * block_point + bonusPoints;
+	if (player.totalScore / block_point <= i)
+		player.totalScore = i * block_point + bonusPoints;
 }
 
 void Character::drawScore(float* CameraPosition) {
-	al_draw_textf(font, al_map_rgb(255, 128, 0), 130+CameraPosition[0], 500+CameraPosition[1], ALLEGRO_ALIGN_CENTRE, "Score: %d", score);
+	al_draw_textf(font, al_map_rgb(255, 128, 0), 130+CameraPosition[0], 500+CameraPosition[1], ALLEGRO_ALIGN_CENTRE, "Score: %d", totalScore);
 }
 
 void Character::drawCharacter(int direction, float* CameraPosition) {
 	switch (direction) {
 	case 1:
-		al_draw_bitmap(player_left, x, y, 0);
+		al_draw_bitmap(player_left, coordinateX, coordinateY, 0);
 		break;
 	case 2:
-		al_draw_bitmap(player_right, x, y, 0);
+		al_draw_bitmap(player_right, coordinateX, coordinateY, 0);
 		break;
 	}
 	drawScore(CameraPosition);
