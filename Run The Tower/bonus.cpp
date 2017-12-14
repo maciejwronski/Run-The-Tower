@@ -8,9 +8,9 @@ Bonus::Bonus() {
 		bonusType[i] = 0;
 	}
 }
-Bonus::~Bonus()
-{
-}
+
+Bonus::~Bonus() { }
+
 void Bonus::createBonus(Block& block) {
 	int count = 0;
 	for (int i = 1; i < MAX_BLOCKS; i++) {
@@ -22,9 +22,10 @@ void Bonus::createBonus(Block& block) {
 		}
 	}
 }
+
 void Bonus::drawBonus() {
 	for (int i = 0; i < bonusNumber; i++) {
-		if (!given[i]){
+		if (given[i] == false){
 			switch (bonusType[i]) {
 			case 0:al_draw_filled_circle(positionX[i], positionY[i] - block_height, constansToDrawBonus, al_map_rgb(rand() % 255, rand() % 255, rand() % 255)); break;
 			case 1: al_draw_filled_rectangle(positionX[i], positionY[i] - block_height, positionX[i] + constansToDrawBonus, positionY[i] - constansToDrawBonus - block_height, al_map_rgb(rand() % 255, rand() % 255, rand() % 255)); break;
@@ -33,20 +34,19 @@ void Bonus::drawBonus() {
 		}
 	}
 }
-bool Bonus::collisionForBonus(float pos_x1, float width_x1, float pos_x2, float width_x2, float pos_y1, float height_y1, float pos_y2, float height_y2) {
-	if (pos_x1 + width_x1 >= pos_x2 && pos_x1 <= pos_x2 + width_x2 && pos_y1 + height_y1 >= pos_y2 && pos_y1 <= pos_y2 + height_y2)
-		return true;
-	else return false;
-}
+
 void Bonus::admitBonus(Character& character) {
 	for (int i = 0; i < bonusNumber; i++) {
-		if (!given[i] && collisionForBonus(character.getPositionX(), character.getWidth(), positionX[i], constansToDrawBonus, character.getPositionY(), character.getHeight(), positionY[i], constansToDrawBonus)) {
-			given[i] = true;
-			switch (bonusType[i]){
+		if (given[i] == false) {
+			if (character.getPositionX() + character.getWidth() >= positionX[i] && character.getPositionX() <= positionX[i] + constansToDrawBonus && character.getHeight() + character.getPositionY() >= positionY[i] && character.getPositionY() <= positionY[i] + constansToDrawBonus) {
+				given[i] = true;
+				switch (bonusType[i]) {
 				case 0: character.addBonusPoints(pointsForCircle); break;
 				case 1: character.addBonusPoints(pointsForRectangle); break;
 				case 2: character.addBonusPoints(pointsForTriangle); break;
+				}
 			}
 		}
 	}
 }
+

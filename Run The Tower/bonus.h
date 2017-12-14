@@ -11,7 +11,7 @@ static const int pointsForCircle = 1;
 static const int pointsForRectangle = 2;
 static const int pointsForTriangle = 3;
 
-static const int constansToDrawBonus = 20;
+static const float constansToDrawBonus = 20;
 
 class Bonus {
 	friend class Block;
@@ -27,5 +27,4 @@ public:
 	void createBonus(Block& block);
 	void drawBonus();
 	void admitBonus(Character& character);
-	bool collisionForBonus(float pos_x1, float width_x1, float pos_x2, float width_x2, float pos_y1, float height_y1, float pos_y2, float height_y2);
 };

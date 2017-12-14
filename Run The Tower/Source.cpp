@@ -49,7 +49,7 @@ void menuLoop() {
 					keys[LEFT] = keys[RIGHT] = false; // In case player is holding key, to prevent from megaboost
 					allegro.changeEvents(); // Menu event to game event
 					menu.setMenu(4); // Starts game
-					myClock.Init(std::clock()); // Inits clock
+					myClock.init(std::clock()); // Inits clock
 					bonus.createBonus(block);
 					break;
 				}
@@ -64,6 +64,7 @@ void menuLoop() {
 	}
 	al_flip_display();
 }
+
 void gameLoop() {
 	ALLEGRO_EVENT ev1;
 	al_wait_for_event(game_event_queue, &ev1);
@@ -87,31 +88,31 @@ void gameLoop() {
 	}
 	else if (ev1.type == ALLEGRO_EVENT_TIMER)
 	{
-		map.Draw(camera.GetCameraPos());
-		block.DrawBlocks();
-		character.DrawCharacter(character.getDirection(), camera.GetCameraPos());
+		map.draw(camera.getCameraPos());
+		block.drawBlocks();
+		character.drawCharacter(character.getDirection(), camera.getCameraPos());
 		bonus.drawBonus();
 		bonus.admitBonus(character);
 		character.updateJump(block, character);
-		if(camera.CameraShouldStart(map, character)){
-			camera.Update(character, myClock, camera.GetCameraPos());
-			camera.Translation(cameratrans, camera.GetCameraPos());
-			myClock.Update(camera.GetCameraPos());
+		if(camera.cameraShouldStart(map, character)){
+			camera.update(character, myClock, camera.getCameraPos());
+			camera.translation(cameratrans, camera.getCameraPos());
+			myClock.update(camera.getCameraPos());
 			if (camera.playerHasFallenDown(map, character)) {
 				menu.setMenu(0);
 			}
 		}
 		if (keys[RIGHT] || keys[LEFT]) {
-			temp = ((std::clock() - start) / (double)CLOCKS_PER_SEC);
+			temp = ((std::clock() - start) /  static_cast<double>(CLOCKS_PER_SEC));
 			character.setDuration(temp);
 		}
 		if (keys[RIGHT]) {
-			if (!map.WallsCollidingWithPlayer(character, START_OF_RIGHT_WALL, WALL_WIDTH)) {
+			if (!map.wallsCollidingWithPlayer(character, START_OF_RIGHT_WALL, WALL_WIDTH)) {
 				character.moveRight(block, character);
 			}
 		}
 		else if (keys[LEFT]) {
-			if (!map.WallsCollidingWithPlayer(character, START_OF_LEFT_WALL, WALL_WIDTH)) {
+			if (!map.wallsCollidingWithPlayer(character, START_OF_LEFT_WALL, WALL_WIDTH)) {
 				character.moveLeft(block, character);
 			}
 		}

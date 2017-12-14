@@ -12,11 +12,13 @@ static float constCameraBoost = 1.0; // Camera's bonus speed after passing 30 se
 
 class MyClock {
 	friend class Camera;
+
 	bool firstTick;
+
 	const int RGB_clock[3] = { 0,0,0 }; // clock line constants
-	int myTime;
-	int degree;
-	int oldTime;
+
+	int currentTime, newTime, degree;
+
 	float cameraBoost;
 	double xC, yC;
 	double currentDegree;
@@ -24,12 +26,15 @@ class MyClock {
 	clock_t my_clock;
 	ALLEGRO_BITMAP *clockbmp;
 
+	void tick(float* CameraPosition);
+	void draw(float* CameraPosition);
+	void flipDisplay();
+
+	float radToDeg(int degree);
+
 public:
 	MyClock();
 	~MyClock();
-	void Tick(float* CameraPosition);
-	void Draw(float* CameraPosition);
-	void Update(float* CameraPosition);
-	void flipDisplay();
-	void Init(clock_t clock);
+	void update(float* CameraPosition);
+	void init(clock_t clock);
 };

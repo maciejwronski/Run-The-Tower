@@ -24,9 +24,9 @@ public:
 
 	Map();
 	~Map();
-	void Background();
-	void Walls(float* CameraPosition);
-	void Draw(float* CameraPosition);
-	bool WallsCollidingWithPlayer(Character& player, int pos_x2, int width_x2);
+	void background();
+	void walls(float* CameraPosition);
+	void draw(float* CameraPosition);
+	bool wallsCollidingWithPlayer(Character& player, int pos_x2, int width_x2);
 
 };

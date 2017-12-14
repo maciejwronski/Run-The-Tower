@@ -11,6 +11,7 @@
 #include <allegro5\monitor.h>
 
 #define FPS 45 // current fps
+
 extern float DeltaTime;
 extern ALLEGRO_DISPLAY *display;
 extern ALLEGRO_TIMER *menu_timer;
@@ -22,8 +23,8 @@ class Allegro {
 public:
 	Allegro();
 	~Allegro();
-	int Conditions();
-	void InitAddons();
+	int conditions();
+	void initAddons();
 	void registerQueueEvents();
 	void changeEvents();
 	void changeEvents2();

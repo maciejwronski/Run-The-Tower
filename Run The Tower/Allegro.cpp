@@ -10,13 +10,21 @@ ALLEGRO_EVENT_QUEUE *game_event_queue = NULL;
 float DeltaTime = 1.0 / FPS;
 
 Allegro::Allegro() {
-	Conditions();
-	InitAddons();
+	conditions();
+	initAddons();
 	registerQueueEvents();
 }
-int Allegro::Conditions()
-{
 
+Allegro::~Allegro() {
+	al_destroy_timer(menu_timer);
+	al_destroy_timer(game_timer);
+
+	if (game_event_queue != NULL)
+		al_destroy_event_queue(game_event_queue);
+
+	al_destroy_display(display);
+}
+int Allegro::conditions(){
 	if (!al_init()) {
 	//	int error;
 	//	printf("Allegro didnt load correctly. Program will exit\nPress any key to continue");
@@ -48,10 +56,9 @@ int Allegro::Conditions()
 	//	printf("Display didnt load correctly. Program will exit\nPress any key to continue");
 		return -1;
 	}
-
 }
 
-void Allegro::InitAddons(){
+void Allegro::initAddons(){
 	al_install_mouse();
 	al_init_font_addon();
 	al_init_ttf_addon();
@@ -64,17 +71,10 @@ void Allegro::InitAddons(){
 void Allegro::registerQueueEvents() {
 	menu_event_queue = al_create_event_queue();
 	menu_timer = al_create_timer(DeltaTime);
+
 	al_register_event_source(menu_event_queue, al_get_keyboard_event_source());
 	al_register_event_source(menu_event_queue, al_get_timer_event_source(menu_timer));
 	al_start_timer(menu_timer);
-}
-
-Allegro::~Allegro() {
-	al_destroy_timer(menu_timer);
-	al_destroy_timer(game_timer);
-	if(game_event_queue != NULL)
-		al_destroy_event_queue(game_event_queue);
-	al_destroy_display(display);
 }
 
 void Allegro::changeEvents() {
@@ -85,6 +85,7 @@ void Allegro::changeEvents() {
 	al_register_event_source(game_event_queue, al_get_timer_event_source(game_timer));
 	al_start_timer(game_timer);
 }
+
 void Allegro::changeEvents2() {
 	al_stop_timer(game_timer);
 	menu_event_queue = al_create_event_queue();
@@ -92,5 +93,4 @@ void Allegro::changeEvents2() {
 	al_register_event_source(menu_event_queue, al_get_keyboard_event_source());
 	al_register_event_source(menu_event_queue, al_get_timer_event_source(menu_timer));
 	al_start_timer(menu_timer);
-
 }

@@ -22,12 +22,12 @@ class Block {
 public:
 	Block();
 	~Block();
-	float* GetCoordinateX();
-	float* GetCoordinateY();
-	float* GetWidth();
-	void CreateBlocks();
-	void DrawBlocks();
-	void CollidingWithPlayer(Character& player);
-	bool CheckIfPlayerIsFlying(Character& player);
+	float* getCoordinateX();
+	float* getCoordinateY();
+	float* getWidth();
+	bool checkIfPlayerIsFlying(Character& player);
+	void createBlocks();
+	void drawBlocks();
+	void collidingWithPlayer(Character& player);
 };
 

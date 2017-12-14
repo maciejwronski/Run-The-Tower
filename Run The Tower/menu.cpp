@@ -11,6 +11,7 @@ Menu::Menu() {
 	logobmp = al_load_bitmap("menu_images/logo.png");
 	font = al_load_font("fonts/times.ttf", 24, 0);
 }
+
 Menu::~Menu() {
 	al_destroy_bitmap(startbmp);
 	al_destroy_bitmap(instructionsbmp);
@@ -20,6 +21,7 @@ Menu::~Menu() {
 	al_destroy_bitmap(logobmp);
 	al_destroy_font(font);
 }
+
 void Menu::drawMainMenu() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_bitmap(logobmp, 0, 20, 0);
@@ -29,10 +31,12 @@ void Menu::drawMainMenu() {
 	al_draw_bitmap(exitbmp, 50, 450, 0);
 	al_draw_bitmap(menusquarebmp, 20, 300 + mainMenuPick, 0);
 }
+
 void Menu::drawInstructions() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_text(font, al_map_rgb(255, 255, 255), 640 / 2, (480 / 4), ALLEGRO_ALIGN_CENTRE, "Instructions");
 }
+
 void Menu::drawOptions() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_text(font, al_map_rgb(255, 255, 255), 640 / 2, (480 / 4), ALLEGRO_ALIGN_CENTRE, "Options");
@@ -45,9 +49,11 @@ void Menu::setMenu(int numb) {
 void Menu::setMainMenuPick(int numb) {
 	mainMenuPick += numb;
 }
+
 int Menu::getMainMenuPick() {
 	return mainMenuPick;
 }
+
 int Menu::getMenu() {
 	return whichMenu;
 }
