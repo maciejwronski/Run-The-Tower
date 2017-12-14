@@ -4,7 +4,7 @@
 #include "allegro.h"
 #include "clock.h"
 
-static int startCameraFromPlayerPoints = 30;
+static const int startCameraFromPlayerPoints = 30;
 
 class Camera {
 	friend class Map;

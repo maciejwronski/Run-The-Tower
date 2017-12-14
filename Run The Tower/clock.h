@@ -4,11 +4,11 @@
 #include <math.h>
 #include <allegro5\allegro_primitives.h>
 
-static int MIDDLE_X_CLOCK = 50;
-static int MIDDLE_Y_CLOCK = 75;
-static int RADIUS_OF_CLOCK = 50;
-static double M_PI = 3.14159265358979323846;
-static float constCameraBoost = 1.0; // Camera's bonus speed after passing 30 seconds
+static const int MIDDLE_X_CLOCK = 50;
+static const int MIDDLE_Y_CLOCK = 75;
+static const int RADIUS_OF_CLOCK = 50;
+static const double M_PI = 3.14159265358979323846;
+static const float constCameraBoost = 1.0; // Camera's bonus speed after passing 30 seconds
 
 class MyClock {
 	friend class Camera;

@@ -5,12 +5,12 @@
 #include "character.h"
 #include "menu.h"
 
-static int START_OF_LEFT_WALL = 0;// = 0; // start of left wall
-static int START_OF_RIGHT_WALL = 718;// = 718; // where right wall starts
-static int WALL_WIDTH = 82;// = 82; // width of wall
+static const int START_OF_LEFT_WALL = 0;// = 0; // start of left wall
+static const int START_OF_RIGHT_WALL = 718;// = 718; // where right wall starts
+static const int WALL_WIDTH = 82;// = 82; // width of wall
 
-static int START_FLOOR_X = 82;// = 82; // where start-floor starts x axis
-static int START_FLOOR_Y = 530;// = 530; // where start-floor starts y axis
+static const int START_FLOOR_X = 82;// = 82; // where start-floor starts x axis
+static const int START_FLOOR_Y = 530;// = 530; // where start-floor starts y axis
 
 class Map {
 	friend class Character;

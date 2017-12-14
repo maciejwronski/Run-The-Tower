@@ -9,10 +9,10 @@
 
 static int temp1, temp2; // used for acceleration
 
-static float run_boost = 0.8; // used for run-boost
-static float up_gravity = 0.45; // Gravity for player, when jumped
-static float falling_gravity = 0.2; // Gravity, when player's falling
-static float block_point = 10; // Point for passing single block
+static const float run_boost = 0.8; // used for run-boost
+static const float up_gravity = 0.45; // Gravity for player, when jumped
+static const float falling_gravity = 0.2; // Gravity, when player's falling
+static const float block_point = 10; // Point for passing single block
 static clock_t start;
 
 class Character {
