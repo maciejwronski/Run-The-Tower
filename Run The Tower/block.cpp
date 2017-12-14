@@ -15,18 +15,6 @@ Block::~Block() {
 	al_destroy_bitmap(floorbmp);
 }
 
-float* Block::getCoordinateX() {
-	return coordinateX;
-}
-
-float* Block::getCoordinateY() {
-	return coordinateY;
-}
-
-float* Block::getWidth() {
-	return width;
-}
-
 bool Block::checkIfPlayerIsFlying(Character& player) {
 	for (int i = 1; i < MAX_BLOCKS; i++) {
 		if ((player.getPositionX() + player.getWidth() < coordinateX[i] || player.getPositionX() > coordinateX[i] + width[i]) && player.getPositionY() + player.getHeight() >= coordinateY[i] && player.getHeight() <= coordinateY[i] + block_height) {

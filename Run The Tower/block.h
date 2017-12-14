@@ -25,8 +25,5 @@ class Block {
 public:
 	Block();
 	~Block();
-	float* getCoordinateX();
-	float* getCoordinateY();
-	float* getWidth();
 	void drawBlocks();
 };
